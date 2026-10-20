@@ -1,0 +1,397 @@
+"""Catalog spec for the synthetic grocery store.
+
+Each Base expands into one product per brand. Tags are structured on purpose:
+they drive faceted filters for the agent and give retrieval evals real ground truth.
+"""
+
+from dataclasses import dataclass, field
+
+
+@dataclass(frozen=True)
+class Base:
+    category: str
+    subcategory: str
+    name: str
+    brands: tuple[str, ...]
+    sizes: tuple[tuple[str, float], ...]  # (label, price for the cheapest brand)
+    blurb: str
+    tags: tuple[str, ...] = ()
+    attrs: dict = field(default_factory=dict)
+
+
+FRESH = ("FarmFresh",)
+FRESH_ORG = ("FarmFresh", "Organic Roots")
+S = lambda *xs: tuple(xs)  # noqa: E731
+
+CATALOG: list[Base] = [
+    # ---------------- Dairy & Eggs ----------------
+    Base("Dairy & Eggs", "Milk", "Toned Milk", S("Amul", "Mother Dairy", "Nandini"),
+         S(("500 ml", 28), ("1 L", 54)), "pasteurised toned milk, 3% fat", S("veg")),
+    Base("Dairy & Eggs", "Milk", "Full Cream Milk", S("Amul", "Mother Dairy", "Akshayakalpa"),
+         S(("500 ml", 34), ("1 L", 68)), "rich and creamy full cream milk, 6% fat", S("veg")),
+    Base("Dairy & Eggs", "Milk", "Double Toned Low Fat Milk", S("Amul", "Mother Dairy"),
+         S(("500 ml", 25), ("1 L", 49)), "double toned milk with just 1.5% fat", S("veg", "low-fat")),
+    Base("Dairy & Eggs", "Milk", "Lactose Free Milk", S("Amul", "Sofit"),
+         S(("1 L", 85),), "lactose free milk, easy to digest", S("veg", "lactose-free")),
+    Base("Dairy & Eggs", "Milk", "A2 Cow Milk", S("Akshayakalpa", "Sid's Farm"),
+         S(("500 ml", 45), ("1 L", 88)), "A2 desi cow milk from grass fed cows", S("veg", "organic")),
+    Base("Dairy & Eggs", "Plant Milk", "Almond Milk Unsweetened", S("Sofit", "Epigamia"),
+         S(("1 L", 249),), "unsweetened almond drink, dairy free", S("vegan", "lactose-free", "sugar-free")),
+    Base("Dairy & Eggs", "Plant Milk", "Soy Milk", S("Sofit",),
+         S(("1 L", 120),), "plant based soy milk, high protein", S("vegan", "lactose-free", "high-protein")),
+    Base("Dairy & Eggs", "Curd & Yogurt", "Fresh Curd (Dahi)", S("Amul", "Mother Dairy", "Nandini"),
+         S(("400 g", 35), ("1 kg", 80)), "thick set fresh dahi", S("veg")),
+    Base("Dairy & Eggs", "Curd & Yogurt", "Greek Yogurt Plain", S("Epigamia", "Milky Mist"),
+         S(("90 g", 45), ("400 g", 160)), "strained greek yogurt, high protein", S("veg", "high-protein")),
+    Base("Dairy & Eggs", "Curd & Yogurt", "Greek Yogurt Blueberry", S("Epigamia",),
+         S(("90 g", 50),), "greek yogurt with blueberry fruit", S("veg", "high-protein")),
+    Base("Dairy & Eggs", "Paneer & Tofu", "Fresh Paneer", S("Amul", "Mother Dairy", "Milky Mist"),
+         S(("200 g", 90), ("500 g", 210)), "soft malai paneer", S("veg", "high-protein")),
+    Base("Dairy & Eggs", "Paneer & Tofu", "Low Fat Paneer", S("Milky Mist",),
+         S(("200 g", 105),), "low fat high protein paneer", S("veg", "high-protein", "low-fat")),
+    Base("Dairy & Eggs", "Paneer & Tofu", "Firm Tofu", S("Urban Platter", "Morinaga"),
+         S(("200 g", 99),), "firm tofu for stir fries", S("vegan", "high-protein", "lactose-free")),
+    Base("Dairy & Eggs", "Butter & Ghee", "Salted Butter", S("Amul", "Mother Dairy"),
+         S(("100 g", 57), ("500 g", 275)), "pasteurised salted table butter", S("veg")),
+    Base("Dairy & Eggs", "Butter & Ghee", "Cow Ghee", S("Amul", "Gowardhan", "Patanjali"),
+         S(("500 ml", 320), ("1 L", 620)), "pure cow ghee with rich aroma", S("veg")),
+    Base("Dairy & Eggs", "Cheese", "Cheese Slices", S("Amul", "Britannia"),
+         S(("200 g", 135),), "processed cheese slices", S("veg")),
+    Base("Dairy & Eggs", "Cheese", "Mozzarella Cheese", S("Amul", "Go"),
+         S(("200 g", 150), ("1 kg", 620)), "shredded mozzarella for pizza", S("veg")),
+    Base("Dairy & Eggs", "Eggs", "Farm Eggs", S("FarmFresh", "Eggoz"),
+         S(("Pack of 6", 48), ("Pack of 12", 92), ("Pack of 30", 215)), "fresh white eggs", S("non-veg", "high-protein")),
+    Base("Dairy & Eggs", "Eggs", "Brown Eggs", S("Eggoz",),
+         S(("Pack of 6", 75), ("Pack of 12", 145)), "nutrient rich brown eggs", S("non-veg", "high-protein")),
+    Base("Dairy & Eggs", "Buttermilk & Lassi", "Masala Chaas", S("Amul", "Mother Dairy"),
+         S(("200 ml", 15), ("Pack of 6", 85)), "spiced buttermilk", S("veg")),
+    Base("Dairy & Eggs", "Buttermilk & Lassi", "Sweet Lassi", S("Amul",),
+         S(("200 ml", 25),), "thick sweet lassi", S("veg")),
+
+    # ---------------- Fruits & Vegetables ----------------
+    *[Base("Fruits & Vegetables", "Fresh Fruits", n, FRESH_ORG, sz, b, S("vegan", "fresh"))
+      for n, sz, b in [
+          ("Banana Robusta", S(("6 pcs", 42), ("12 pcs", 80)), "ripe robusta bananas"),
+          ("Shimla Apple", S(("500 g", 110), ("1 kg", 210)), "crisp red apples from Himachal"),
+          ("Alphonso Mango", S(("1 kg", 450),), "sweet ratnagiri alphonso mangoes"),
+          ("Nagpur Orange", S(("1 kg", 120),), "juicy nagpur oranges"),
+          ("Green Grapes", S(("500 g", 80),), "seedless green grapes"),
+          ("Pomegranate", S(("500 g", 140), ("1 kg", 270)), "ruby red pomegranates"),
+          ("Papaya", S(("1 pc (~1 kg)", 60),), "ripe papaya"),
+          ("Watermelon", S(("1 pc (~2.5 kg)", 95),), "sweet kiran watermelon"),
+          ("Kiwi", S(("3 pcs", 99),), "imported green kiwi"),
+          ("Avocado", S(("1 pc", 149),), "hass avocado"),
+          ("Strawberry", S(("200 g", 120),), "fresh mahabaleshwar strawberries"),
+      ]],
+    *[Base("Fruits & Vegetables", "Fresh Vegetables", n, FRESH_ORG, sz, b, S("vegan", "fresh"))
+      for n, sz, b in [
+          ("Onion", S(("1 kg", 40), ("2 kg", 76)), "red onions"),
+          ("Potato", S(("1 kg", 35), ("2 kg", 66)), "fresh potatoes"),
+          ("Tomato Hybrid", S(("500 g", 25), ("1 kg", 48)), "firm red tomatoes"),
+          ("Spinach (Palak)", S(("250 g", 30),), "fresh leafy palak"),
+          ("Carrot", S(("500 g", 40),), "orange ooty carrots"),
+          ("Green Capsicum", S(("250 g", 30),), "crunchy green capsicum"),
+          ("Cauliflower", S(("1 pc", 45),), "fresh cauliflower"),
+          ("Cucumber", S(("500 g", 30),), "fresh green cucumber"),
+          ("Ginger", S(("100 g", 18),), "fresh ginger"),
+          ("Garlic", S(("100 g", 25),), "fresh garlic"),
+          ("Lemon", S(("4 pcs", 20),), "juicy lemons"),
+          ("Coriander Leaves", S(("100 g", 15),), "fresh dhania"),
+          ("Green Chilli", S(("100 g", 12),), "spicy green chillies"),
+          ("Broccoli", S(("1 pc (~300 g)", 85),), "exotic green broccoli"),
+          ("Mushroom Button", S(("200 g", 55),), "white button mushrooms"),
+      ]],
+
+    # ---------------- Bakery ----------------
+    Base("Bakery", "Bread", "White Sandwich Bread", S("Britannia", "Modern", "Harvest Gold"),
+         S(("400 g", 45), ("800 g", 80)), "soft white sandwich bread", S("veg")),
+    Base("Bakery", "Bread", "Brown Bread", S("Britannia", "Modern", "Harvest Gold"),
+         S(("400 g", 50),), "brown bread with wheat bran", S("veg", "whole-grain")),
+    Base("Bakery", "Bread", "Multigrain Bread", S("Britannia", "The Health Factory"),
+         S(("400 g", 60),), "multigrain bread with seeds", S("veg", "whole-grain", "high-fiber")),
+    Base("Bakery", "Bread", "Zero Maida 100% Whole Wheat Bread", S("The Health Factory",),
+         S(("400 g", 75),), "no maida whole wheat bread", S("vegan", "whole-grain", "high-fiber")),
+    Base("Bakery", "Bread", "Gluten Free Bread", S("Bon",),
+         S(("300 g", 140),), "gluten free bread made with rice flour", S("veg", "gluten-free")),
+    Base("Bakery", "Buns & Pav", "Ladi Pav", S("Britannia", "Modern"),
+         S(("Pack of 6", 30), ("Pack of 12", 55)), "soft pav for pav bhaji", S("veg")),
+    Base("Bakery", "Buns & Pav", "Burger Buns", S("Harvest Gold",),
+         S(("Pack of 4", 40),), "sesame burger buns", S("veg")),
+    Base("Bakery", "Cakes & Rusk", "Milk Rusk", S("Britannia", "Parle"),
+         S(("200 g", 40), ("600 g", 110)), "crunchy rusk toast", S("veg")),
+    Base("Bakery", "Cakes & Rusk", "Chocolate Muffins", S("Britannia",),
+         S(("Pack of 6", 90),), "chocolate chip muffins", S("veg")),
+
+    # ---------------- Staples ----------------
+    Base("Staples", "Atta & Flours", "Whole Wheat Atta", S("Aashirvaad", "Pillsbury", "Fortune"),
+         S(("1 kg", 62), ("5 kg", 285), ("10 kg", 540)), "chakki fresh whole wheat atta", S("vegan", "whole-grain")),
+    Base("Staples", "Atta & Flours", "Multigrain Atta", S("Aashirvaad",),
+         S(("1 kg", 85), ("5 kg", 395)), "atta with 6 grains", S("vegan", "whole-grain", "high-fiber")),
+    Base("Staples", "Atta & Flours", "Besan (Gram Flour)", S("Tata Sampann", "Rajdhani"),
+         S(("500 g", 65), ("1 kg", 120)), "fine besan for pakoras", S("vegan", "gluten-free", "high-protein")),
+    Base("Staples", "Atta & Flours", "Maida", S("Pillsbury", "Rajdhani"),
+         S(("1 kg", 55),), "refined wheat flour", S("vegan")),
+    Base("Staples", "Rice", "Basmati Rice", S("India Gate", "Daawat", "Kohinoor"),
+         S(("1 kg", 140), ("5 kg", 650)), "long grain aged basmati rice", S("vegan", "gluten-free")),
+    Base("Staples", "Rice", "Sona Masoori Rice", S("India Gate", "24 Mantra Organic"),
+         S(("5 kg", 380), ("10 kg", 740)), "everyday sona masoori rice", S("vegan", "gluten-free")),
+    Base("Staples", "Rice", "Brown Rice", S("Daawat", "24 Mantra Organic"),
+         S(("1 kg", 150),), "unpolished brown rice", S("vegan", "gluten-free", "whole-grain", "high-fiber")),
+    Base("Staples", "Dals & Pulses", "Toor Dal", S("Tata Sampann", "24 Mantra Organic", "Fortune"),
+         S(("500 g", 85), ("1 kg", 165)), "unpolished toor/arhar dal", S("vegan", "high-protein")),
+    Base("Staples", "Dals & Pulses", "Moong Dal", S("Tata Sampann", "Fortune"),
+         S(("500 g", 75), ("1 kg", 145)), "yellow moong dal", S("vegan", "high-protein")),
+    Base("Staples", "Dals & Pulses", "Chana Dal", S("Tata Sampann", "Fortune"),
+         S(("500 g", 60), ("1 kg", 115)), "split bengal gram", S("vegan", "high-protein")),
+    Base("Staples", "Dals & Pulses", "Masoor Dal", S("Tata Sampann",),
+         S(("500 g", 70),), "red lentils", S("vegan", "high-protein")),
+    Base("Staples", "Dals & Pulses", "Rajma Chitra", S("Tata Sampann", "24 Mantra Organic"),
+         S(("500 g", 95),), "chitra rajma kidney beans", S("vegan", "high-protein")),
+    Base("Staples", "Dals & Pulses", "Kabuli Chana", S("Tata Sampann",),
+         S(("500 g", 90), ("1 kg", 170)), "large white chickpeas", S("vegan", "high-protein")),
+    Base("Staples", "Sugar & Salt", "Sugar", S("Madhur", "Uttam"),
+         S(("1 kg", 52), ("5 kg", 250)), "refined sulphur free sugar", S("vegan")),
+    Base("Staples", "Sugar & Salt", "Iodised Salt", S("Tata", "Aashirvaad"),
+         S(("1 kg", 28),), "vacuum evaporated iodised salt", S("vegan")),
+    Base("Staples", "Sugar & Salt", "Rock Salt (Sendha Namak)", S("Tata",),
+         S(("1 kg", 75),), "himalayan pink rock salt", S("vegan")),
+    Base("Staples", "Sugar & Salt", "Jaggery Powder", S("24 Mantra Organic", "Organic Roots"),
+         S(("500 g", 90),), "natural jaggery powder", S("vegan", "organic")),
+    Base("Staples", "Edible Oils", "Sunflower Oil", S("Fortune", "Saffola", "Freedom"),
+         S(("1 L", 150), ("5 L", 720)), "refined sunflower oil", S("vegan")),
+    Base("Staples", "Edible Oils", "Kachi Ghani Mustard Oil", S("Fortune", "Patanjali"),
+         S(("1 L", 175),), "pungent cold pressed mustard oil", S("vegan")),
+    Base("Staples", "Edible Oils", "Groundnut Oil", S("Fortune", "Gemini"),
+         S(("1 L", 190),), "filtered groundnut oil", S("vegan")),
+    Base("Staples", "Edible Oils", "Extra Virgin Olive Oil", S("Figaro", "Borges"),
+         S(("500 ml", 650), ("1 L", 1199)), "cold extracted extra virgin olive oil", S("vegan")),
+    Base("Staples", "Masalas & Spices", "Turmeric Powder", S("Everest", "MDH", "Catch"),
+         S(("100 g", 35), ("200 g", 65)), "pure haldi powder", S("vegan")),
+    Base("Staples", "Masalas & Spices", "Red Chilli Powder", S("Everest", "MDH", "Catch"),
+         S(("100 g", 45), ("200 g", 85)), "hot kashmiri red chilli powder", S("vegan")),
+    Base("Staples", "Masalas & Spices", "Garam Masala", S("Everest", "MDH"),
+         S(("100 g", 85),), "aromatic garam masala blend", S("vegan")),
+    Base("Staples", "Masalas & Spices", "Kitchen King Masala", S("Everest", "MDH"),
+         S(("100 g", 80),), "all purpose sabzi masala", S("vegan")),
+    Base("Staples", "Masalas & Spices", "Cumin Seeds (Jeera)", S("Catch", "Tata Sampann"),
+         S(("100 g", 60),), "whole jeera seeds", S("vegan")),
+
+    # ---------------- Snacks ----------------
+    Base("Snacks", "Chips & Crisps", "Classic Salted Potato Chips", S("Lay's", "Bingo", "Pringles"),
+         S(("52 g", 20), ("90 g", 40)), "crispy salted potato chips", S("veg")),
+    Base("Snacks", "Chips & Crisps", "Magic Masala Chips", S("Lay's",),
+         S(("52 g", 20), ("90 g", 40)), "spicy indian masala chips", S("veg")),
+    Base("Snacks", "Chips & Crisps", "Baked Ragi Chips", S("Too Yumm", "Tata Soulfull"),
+         S(("70 g", 45),), "baked not fried ragi chips", S("veg", "baked", "low-fat")),
+    Base("Snacks", "Chips & Crisps", "Nachos Cheese", S("Doritos", "Cornitos"),
+         S(("60 g", 30), ("150 g", 85)), "cheesy corn nachos", S("veg", "gluten-free")),
+    Base("Snacks", "Namkeen", "Aloo Bhujia", S("Haldiram's", "Bikaji", "Bikano"),
+         S(("200 g", 55), ("400 g", 105)), "crispy aloo bhujia", S("veg")),
+    Base("Snacks", "Namkeen", "Moong Dal Namkeen", S("Haldiram's",),
+         S(("200 g", 55),), "salted fried moong dal", S("veg", "high-protein")),
+    Base("Snacks", "Namkeen", "Roasted Makhana Peri Peri", S("Farmley", "Too Yumm"),
+         S(("70 g", 99),), "roasted fox nuts, never fried", S("veg", "gluten-free", "low-fat")),
+    Base("Snacks", "Biscuits & Cookies", "Glucose Biscuits", S("Parle-G", "Britannia Tiger"),
+         S(("250 g", 25), ("800 g", 80)), "classic glucose biscuits", S("veg")),
+    Base("Snacks", "Biscuits & Cookies", "Chocolate Cream Biscuits", S("Oreo", "Hide & Seek", "Bourbon"),
+         S(("120 g", 35), ("300 g", 80)), "chocolate sandwich cream biscuits", S("veg")),
+    Base("Snacks", "Biscuits & Cookies", "Digestive Biscuits", S("McVitie's", "Britannia NutriChoice"),
+         S(("250 g", 65),), "whole wheat digestive biscuits", S("veg", "whole-grain", "high-fiber")),
+    Base("Snacks", "Biscuits & Cookies", "Sugar Free Cookies", S("Britannia NutriChoice", "Unibic"),
+         S(("150 g", 75),), "sugar free cookies for diabetics", S("veg", "sugar-free")),
+    Base("Snacks", "Biscuits & Cookies", "Butter Cookies", S("Danish Butter", "Unibic"),
+         S(("200 g", 95),), "rich butter cookies", S("veg")),
+    Base("Snacks", "Chocolates", "Milk Chocolate Bar", S("Cadbury Dairy Milk", "Amul"),
+         S(("50 g", 50), ("150 g", 150)), "creamy milk chocolate", S("veg")),
+    Base("Snacks", "Chocolates", "Dark Chocolate 70%", S("Amul", "Lindt"),
+         S(("100 g", 120),), "rich 70% dark chocolate", S("veg")),
+    Base("Snacks", "Chocolates", "Sugar Free Dark Chocolate", S("Amul",),
+         S(("100 g", 140),), "dark chocolate with no added sugar", S("veg", "sugar-free")),
+    Base("Snacks", "Protein Bars", "Protein Bar Peanut Butter", S("RiteBite Max", "Yoga Bar", "Whole Truth"),
+         S(("1 bar", 60), ("Pack of 6", 330)), "20g protein bar", S("veg", "high-protein")),
+
+    # ---------------- Beverages ----------------
+    Base("Beverages", "Tea", "Premium Black Tea", S("Tata Tea", "Red Label", "Taj Mahal"),
+         S(("250 g", 140), ("500 g", 270)), "strong assam black tea", S("vegan")),
+    Base("Beverages", "Tea", "Green Tea Bags", S("Lipton", "Tetley", "Organic India"),
+         S(("25 bags", 150),), "antioxidant green tea bags", S("vegan", "sugar-free")),
+    Base("Beverages", "Coffee", "Instant Coffee", S("Nescafe", "Bru"),
+         S(("50 g", 180), ("100 g", 340)), "rich instant coffee", S("vegan")),
+    Base("Beverages", "Coffee", "Filter Coffee Powder", S("Bru", "Cothas"),
+         S(("200 g", 150),), "south indian filter coffee with chicory", S("vegan")),
+    Base("Beverages", "Soft Drinks", "Cola", S("Coca-Cola", "Pepsi", "Thums Up"),
+         S(("750 ml", 40), ("2 L", 95)), "chilled cola soft drink", S("vegan")),
+    Base("Beverages", "Soft Drinks", "Diet Cola Zero Sugar", S("Coke Zero", "Pepsi Black"),
+         S(("300 ml", 40),), "cola with zero sugar", S("vegan", "sugar-free")),
+    Base("Beverages", "Soft Drinks", "Lemon Soda", S("Sprite", "7Up", "Limca"),
+         S(("750 ml", 40), ("2 L", 95)), "clear lemon soft drink", S("vegan")),
+    Base("Beverages", "Juices", "Mixed Fruit Juice", S("Real", "Tropicana"),
+         S(("1 L", 115),), "mixed fruit juice", S("vegan")),
+    Base("Beverages", "Juices", "100% Orange Juice No Added Sugar", S("Tropicana", "Raw Pressery"),
+         S(("1 L", 145),), "100% orange juice with no added sugar", S("vegan", "sugar-free")),
+    Base("Beverages", "Juices", "Coconut Water", S("Raw Pressery", "Paper Boat"),
+         S(("200 ml", 45), ("1 L", 160)), "tender coconut water", S("vegan", "sugar-free")),
+    Base("Beverages", "Energy & Health Drinks", "Energy Drink", S("Red Bull", "Monster"),
+         S(("250 ml", 125),), "caffeinated energy drink", S("vegan")),
+    Base("Beverages", "Energy & Health Drinks", "Chocolate Health Drink", S("Bournvita", "Horlicks"),
+         S(("500 g", 245), ("1 kg", 460)), "chocolate malt health drink", S("veg")),
+    Base("Beverages", "Energy & Health Drinks", "Whey Protein Chocolate", S("MuscleBlaze", "Optimum Nutrition"),
+         S(("1 kg", 2399),), "whey protein, 25g protein per scoop", S("veg", "high-protein")),
+    Base("Beverages", "Water", "Packaged Drinking Water", S("Bisleri", "Kinley"),
+         S(("1 L", 20), ("Pack of 12 x 1 L", 220)), "purified drinking water", S("vegan")),
+
+    # ---------------- Breakfast ----------------
+    Base("Breakfast", "Cereals", "Corn Flakes", S("Kellogg's", "Bagrry's"),
+         S(("475 g", 185),), "crispy corn flakes", S("vegan")),
+    Base("Breakfast", "Cereals", "Chocos", S("Kellogg's",),
+         S(("375 g", 199),), "chocolate wheat scoops", S("veg")),
+    Base("Breakfast", "Oats & Muesli", "Rolled Oats", S("Quaker", "Saffola", "True Elements"),
+         S(("500 g", 110), ("1 kg", 199)), "100% whole grain rolled oats", S("vegan", "whole-grain", "high-fiber")),
+    Base("Breakfast", "Oats & Muesli", "Masala Oats", S("Saffola",),
+         S(("Pack of 4", 60),), "instant masala oats", S("veg", "whole-grain")),
+    Base("Breakfast", "Oats & Muesli", "No Added Sugar Muesli", S("Yoga Bar", "Bagrry's"),
+         S(("400 g", 299),), "fruit and nut muesli with no added sugar", S("vegan", "sugar-free", "high-fiber")),
+    Base("Breakfast", "Oats & Muesli", "Gluten Free Oats", S("True Elements",),
+         S(("500 g", 260),), "certified gluten free oats", S("vegan", "gluten-free", "whole-grain")),
+    Base("Breakfast", "Spreads", "Peanut Butter Crunchy", S("Pintola", "Sundrop", "MyFitness"),
+         S(("350 g", 175), ("1 kg", 450)), "crunchy peanut butter", S("vegan", "high-protein")),
+    Base("Breakfast", "Spreads", "Unsweetened Peanut Butter", S("Pintola", "Whole Truth"),
+         S(("350 g", 199),), "100% peanuts, no sugar, no salt", S("vegan", "high-protein", "sugar-free")),
+    Base("Breakfast", "Spreads", "Mixed Fruit Jam", S("Kissan", "Del Monte"),
+         S(("200 g", 75), ("500 g", 160)), "mixed fruit jam", S("vegan")),
+    Base("Breakfast", "Spreads", "Hazelnut Cocoa Spread", S("Nutella",),
+         S(("350 g", 399),), "hazelnut spread with cocoa", S("veg")),
+    Base("Breakfast", "Spreads", "Pure Honey", S("Dabur", "Saffola Honey", "Apis"),
+         S(("250 g", 120), ("500 g", 225)), "pure natural honey", S("veg")),
+
+    # ---------------- Instant Food ----------------
+    Base("Instant Food", "Noodles & Pasta", "Masala Instant Noodles", S("Maggi", "Yippee", "Top Ramen"),
+         S(("Pack of 4", 56), ("Pack of 12", 165)), "2-minute masala noodles", S("veg")),
+    Base("Instant Food", "Noodles & Pasta", "Atta Noodles", S("Maggi",),
+         S(("Pack of 4", 72),), "whole wheat atta noodles", S("veg", "whole-grain")),
+    Base("Instant Food", "Noodles & Pasta", "Korean Spicy Ramen", S("Samyang", "Nongshim"),
+         S(("1 pack", 120),), "extra spicy korean ramen", S("veg")),
+    Base("Instant Food", "Noodles & Pasta", "Penne Pasta", S("Barilla", "Del Monte"),
+         S(("500 g", 150),), "durum wheat penne", S("vegan")),
+    Base("Instant Food", "Ready to Eat", "Dal Makhani Ready to Eat", S("MTR", "Haldiram's"),
+         S(("300 g", 125),), "heat and eat dal makhani", S("veg")),
+    Base("Instant Food", "Ready to Eat", "Paneer Butter Masala Ready to Eat", S("MTR", "Haldiram's"),
+         S(("300 g", 145),), "heat and eat paneer butter masala", S("veg")),
+    Base("Instant Food", "Ready to Eat", "Poha Instant Mix", S("MTR",),
+         S(("Pack of 5", 110),), "instant poha cups", S("veg")),
+    Base("Instant Food", "Sauces & Ketchup", "Tomato Ketchup", S("Kissan", "Maggi", "Heinz"),
+         S(("500 g", 110), ("1 kg", 180)), "tangy tomato ketchup", S("vegan")),
+    Base("Instant Food", "Sauces & Ketchup", "Eggless Mayonnaise", S("Veeba", "Dr. Oetker FunFoods"),
+         S(("250 g", 99),), "creamy eggless mayo", S("veg")),
+    Base("Instant Food", "Sauces & Ketchup", "Pizza Pasta Sauce", S("Veeba", "Del Monte"),
+         S(("250 g", 120),), "italian pizza and pasta sauce", S("vegan")),
+    Base("Instant Food", "Soups", "Tomato Soup Mix", S("Knorr", "Maggi"),
+         S(("Pack of 4", 95),), "instant tomato soup", S("veg")),
+
+    # ---------------- Frozen ----------------
+    Base("Frozen", "Frozen Veg", "Frozen Green Peas", S("Safal", "McCain"),
+         S(("500 g", 95), ("1 kg", 180)), "frozen green peas", S("vegan")),
+    Base("Frozen", "Frozen Veg", "French Fries", S("McCain",),
+         S(("420 g", 120), ("1.25 kg", 320)), "crispy frozen french fries", S("vegan")),
+    Base("Frozen", "Frozen Snacks", "Aloo Tikki", S("McCain",),
+         S(("400 g", 140),), "frozen aloo tikki patties", S("veg")),
+    Base("Frozen", "Frozen Snacks", "Malabar Parotta", S("iD Fresh", "Sumeru"),
+         S(("Pack of 5", 99),), "flaky malabar parottas", S("veg")),
+    Base("Frozen", "Frozen Snacks", "Chicken Nuggets", S("Licious", "Godrej Yummiez"),
+         S(("400 g", 270),), "crispy chicken nuggets", S("non-veg", "high-protein")),
+    Base("Frozen", "Ice Cream", "Vanilla Ice Cream Tub", S("Amul", "Kwality Walls", "Havmor"),
+         S(("700 ml", 180), ("1.5 L", 340)), "classic vanilla ice cream", S("veg")),
+    Base("Frozen", "Ice Cream", "Chocolate Ice Cream Tub", S("Amul", "Baskin Robbins"),
+         S(("700 ml", 210),), "rich chocolate ice cream", S("veg")),
+    Base("Frozen", "Ice Cream", "Sugar Free Ice Cream", S("Amul",),
+         S(("500 ml", 220),), "ice cream with no added sugar", S("veg", "sugar-free")),
+
+    # ---------------- Meat & Seafood ----------------
+    Base("Meat & Seafood", "Chicken", "Chicken Curry Cut", S("Licious", "FreshToHome"),
+         S(("500 g", 179), ("1 kg", 345)), "skinless curry cut chicken", S("non-veg", "high-protein", "fresh")),
+    Base("Meat & Seafood", "Chicken", "Chicken Breast Boneless", S("Licious", "FreshToHome"),
+         S(("450 g", 275),), "lean boneless chicken breast", S("non-veg", "high-protein", "low-fat", "fresh")),
+    Base("Meat & Seafood", "Mutton", "Mutton Curry Cut", S("Licious",),
+         S(("500 g", 450),), "goat curry cut", S("non-veg", "high-protein", "fresh")),
+    Base("Meat & Seafood", "Fish & Seafood", "Rohu Fish Curry Cut", S("FreshToHome",),
+         S(("500 g", 199),), "freshwater rohu curry cut", S("non-veg", "high-protein", "fresh")),
+    Base("Meat & Seafood", "Fish & Seafood", "Prawns Medium Cleaned", S("Licious", "FreshToHome"),
+         S(("250 g", 299),), "deveined medium prawns", S("non-veg", "high-protein", "fresh")),
+
+    # ---------------- Personal Care ----------------
+    Base("Personal Care", "Bath & Body", "Moisturising Bathing Bar", S("Dove", "Pears", "Lux"),
+         S(("Pack of 3", 150), ("Pack of 5", 240)), "moisturising soap bar", S()),
+    Base("Personal Care", "Bath & Body", "Body Wash", S("Dove", "Nivea"),
+         S(("250 ml", 225),), "nourishing body wash", S()),
+    Base("Personal Care", "Hair Care", "Anti Dandruff Shampoo", S("Head & Shoulders", "Clinic Plus"),
+         S(("180 ml", 190), ("650 ml", 560)), "anti dandruff shampoo", S()),
+    Base("Personal Care", "Hair Care", "Coconut Hair Oil", S("Parachute", "Dabur"),
+         S(("200 ml", 105), ("500 ml", 240)), "pure coconut hair oil", S()),
+    Base("Personal Care", "Oral Care", "Toothpaste", S("Colgate", "Pepsodent", "Sensodyne"),
+         S(("100 g", 60), ("200 g", 115)), "cavity protection toothpaste", S()),
+    Base("Personal Care", "Oral Care", "Toothbrush Soft", S("Colgate", "Oral-B"),
+         S(("Pack of 4", 99),), "soft bristle toothbrush", S()),
+    Base("Personal Care", "Skin Care", "Face Wash", S("Himalaya", "Cetaphil", "Mamaearth"),
+         S(("100 ml", 150),), "gentle daily face wash", S()),
+    Base("Personal Care", "Skin Care", "Sunscreen SPF 50", S("Lakme", "Neutrogena", "Minimalist"),
+         S(("50 g", 349),), "broad spectrum spf 50 sunscreen", S()),
+
+    # ---------------- Household ----------------
+    Base("Household", "Laundry", "Detergent Powder", S("Surf Excel", "Tide", "Ariel"),
+         S(("1 kg", 140), ("4 kg", 520)), "detergent powder for bucket wash", S()),
+    Base("Household", "Laundry", "Liquid Detergent Front Load", S("Surf Excel", "Ariel"),
+         S(("1 L", 230), ("2 L", 430)), "liquid detergent for front load machines", S()),
+    Base("Household", "Dishwash", "Dishwash Liquid Gel", S("Vim", "Pril"),
+         S(("500 ml", 110), ("1 L", 199)), "lemon dishwash gel", S()),
+    Base("Household", "Dishwash", "Dishwash Bar", S("Vim", "Exo"),
+         S(("Pack of 3", 60),), "dishwash bar", S()),
+    Base("Household", "Cleaners", "Floor Cleaner", S("Lizol", "Domex"),
+         S(("500 ml", 115), ("2 L", 399)), "disinfectant floor cleaner", S()),
+    Base("Household", "Cleaners", "Toilet Cleaner", S("Harpic", "Domex"),
+         S(("500 ml", 99), ("Pack of 2", 185)), "power plus toilet cleaner", S()),
+    Base("Household", "Paper & Disposables", "Garbage Bags Medium", S("Ezee", "Presto"),
+         S(("30 bags", 120),), "medium garbage bags", S()),
+    Base("Household", "Paper & Disposables", "Kitchen Towel Roll", S("Origami", "Presto"),
+         S(("Pack of 2", 150),), "absorbent kitchen towels", S()),
+    Base("Household", "Paper & Disposables", "Toilet Tissue Roll", S("Origami", "Selpak"),
+         S(("Pack of 4", 199),), "soft 2-ply toilet rolls", S()),
+
+    # ---------------- Baby Care ----------------
+    Base("Baby Care", "Diapers", "Baby Diaper Pants Medium", S("Pampers", "Huggies", "MamyPoko"),
+         S(("Pack of 32", 699), ("Pack of 76", 1399)), "diaper pants for 7-12 kg babies", S()),
+    Base("Baby Care", "Baby Food", "Baby Cereal Wheat Apple", S("Cerelac", "Slurrp Farm"),
+         S(("300 g", 285),), "infant cereal from 8 months", S("veg")),
+    Base("Baby Care", "Baby Wipes", "Baby Wipes", S("Himalaya", "Mamaearth"),
+         S(("Pack of 72", 199),), "gentle water based baby wipes", S()),
+]
+
+
+def expand() -> list[dict]:
+    """Expand bases into concrete products with brand-specific price offsets."""
+    products = []
+    for base in CATALOG:
+        for i, brand in enumerate(base.brands):
+            mult = 1.0 + 0.08 * i  # later brands are a bit pricier
+            name = base.name
+            tags = list(base.tags)
+            if brand in ("Organic Roots", "24 Mantra Organic", "Organic India"):
+                tags.append("organic")
+                mult += 0.25
+            variants = [
+                {"label": label, "price": round(p * mult), "mrp": round(p * mult * 1.12)}
+                for label, p in base.sizes
+            ]
+            products.append(
+                {
+                    "name": f"{brand} {name}",
+                    "brand": brand,
+                    "category": base.category,
+                    "subcategory": base.subcategory,
+                    "description": f"{brand} {name.lower()}: {base.blurb}.",
+                    "tags": sorted(set(tags)),
+                    "attributes": dict(base.attrs),
+                    "variants": variants,
+                    "base": base.name,
+                }
+            )
+    return products

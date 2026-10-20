@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+node_modules/
+dist/
+.env
+.DS_Store
+
+# fine-tuning artifacts (large; regenerate with finetune/README.md or download from the model hub)
+finetune/fused/
+finetune/adapters/
+finetune/adapters-*/
+finetune/*.gguf
+finetune/llama.cpp/
+finetune/data/*.jsonl
+finetune/.venv/
+
+# local tooling
+frontend/test-results/

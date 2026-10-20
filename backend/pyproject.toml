@@ -1,0 +1,51 @@
+[project]
+name = "converse"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "aioboto3>=15.5.0",
+    "asyncpg>=0.32.0",
+    "bm25s>=0.3.14",
+    "dateparser>=1.4.3",
+    "fastapi>=0.146.0",
+    "fastembed>=0.9.0",
+    "httpx>=0.28.1",
+    "mcp[cli]>=2.3.0",
+    "pgvector>=0.5.1",
+    "pydantic-settings>=2.16.0",
+    "python-dateutil>=2.9.0.post0",
+    "pyyaml>=6.0.3",
+    "rapidfuzz>=3.14.6",
+    "sqlalchemy[asyncio]>=2.0",
+    "sse-starlette>=3.5.0",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.17.1",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 130
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC"]
+ignore = ["B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"evals/tasks.py" = ["E501"]
+"evals/run_retrieval.py" = ["E501"]
+# prompt text and tool descriptions read better unwrapped
+"app/agent/loop.py" = ["E501"]
+"app/agent/tools.py" = ["E501"]

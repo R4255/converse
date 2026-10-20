@@ -1,0 +1,54 @@
+# Local stack for Converse.
+#   Dev mode (default):  podman-compose -f infra/compose.yaml up -d postgres localstack
+#   Full demo:           podman-compose -f infra/compose.yaml --profile app up -d --build
+# Ollama runs on the host (GPU access); containers reach it via host.containers.internal.
+name: converse
+
+services:
+  postgres:
+    image: docker.io/pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: converse
+      POSTGRES_PASSWORD: converse
+      POSTGRES_DB: converse
+    ports: ["5433:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U converse"]
+      interval: 3s
+      retries: 20
+
+  localstack:
+    image: docker.io/localstack/localstack:4.4
+    environment:
+      SERVICES: sqs,s3,scheduler,iam,sts
+      AWS_DEFAULT_REGION: ap-south-1
+    ports: ["4566:4566"]
+    volumes:
+      - ./localstack/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh:ro,Z
+
+  api:
+    profiles: [app]
+    build: { context: ../backend }
+    env_file: ../backend/.env.container
+    ports: ["8000:8000"]
+    depends_on: [postgres, localstack]
+    restart: unless-stopped
+
+  worker:
+    profiles: [app]
+    build: { context: ../backend }
+    command: ["uv", "run", "--no-sync", "python", "-m", "app.worker"]
+    env_file: ../backend/.env.container
+    depends_on: [postgres, localstack]
+    restart: unless-stopped   # plus app-level retries while LocalStack creates its queues
+
+  web:
+    profiles: [app]
+    build: { context: ../frontend }
+    ports: ["5173:80"]
+    depends_on: [api]
+    restart: unless-stopped
+
+volumes:
+  pgdata:

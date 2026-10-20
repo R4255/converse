@@ -1,0 +1,90 @@
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --border: #e8eaee;
+  --muted: #6b7280;
+  --brand: #0c831f;
+  --brand-soft: #e8f5ea;
+  --bubble-user: #0c831f;
+  --bubble-ai: #f2f4f7;
+}
+:root[data-theme='dark'] {
+  --bg: #0f1113;
+  --surface: #17191c;
+  --border: #2a2d32;
+  --muted: #9aa1ab;
+  --brand-soft: #12301a;
+  --bubble-ai: #22262b;
+}
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; height: 100%; }
+body { background: var(--bg); }
+
+.shell { min-height: 100vh; background: var(--bg) !important; }
+.header {
+  position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
+  padding: 0 20px !important; height: 68px !important; line-height: normal !important;
+  background: var(--surface) !important; border-bottom: 1px solid var(--border);
+}
+.logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.logo-mark {
+  width: 34px; height: 34px; border-radius: 10px; background: var(--brand); color: #fff;
+  display: grid; place-items: center; font-weight: 800; font-size: 18px;
+}
+.logo-text { font-weight: 800; font-size: 20px; color: var(--brand); letter-spacing: -0.5px; }
+.bar-wrap { flex: 1; max-width: 760px; }
+.command-bar { border-radius: 14px !important; }
+.command-bar .spark { color: var(--brand); }
+.kbd { font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 0 6px; margin: 0 6px; }
+.header-right { margin-left: auto; }
+.user-select { min-width: 150px; }
+
+.content { padding: 20px 24px; max-width: 1280px; width: 100%; margin: 0 auto; }
+
+.assistant-panel {
+  width: 380px; flex-shrink: 0; position: sticky; top: 68px; height: calc(100vh - 68px);
+  background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column;
+}
+.assistant-head { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.assistant-body { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.bubble { padding: 10px 12px; border-radius: 14px; max-width: 92%; line-height: 1.45; }
+.bubble.user { align-self: flex-end; background: var(--bubble-user); color: #fff; border-bottom-right-radius: 4px; }
+.bubble.assistant { align-self: flex-start; background: var(--bubble-ai); border-bottom-left-radius: 4px; }
+.steps { display: flex; flex-direction: column; gap: 4px; margin-bottom: 6px; font-size: 12.5px; color: var(--muted); }
+.step { display: flex; gap: 6px; align-items: center; }
+.step .ok { color: var(--brand); }
+.meta { display: flex; gap: 8px; align-items: center; margin-top: 6px; font-size: 11.5px; color: var(--muted); }
+.confirm-card { margin-top: 8px; border-color: var(--brand) !important; }
+.example { white-space: normal; height: auto !important; text-align: left; }
+
+.muted { color: var(--muted); }
+.hero { margin-bottom: 20px; cursor: pointer; background: linear-gradient(120deg, var(--brand-soft), var(--surface)) !important; }
+.hero-icon { font-size: 36px; color: var(--brand); }
+.cat-card { text-align: center; }
+.cat-emoji { font-size: 34px; }
+.cat-name { font-size: 12px; font-weight: 600; margin-top: 4px; }
+
+.thumb { display: grid; place-items: center; border-radius: 12px; background: var(--brand-soft); }
+.product-card { position: relative; height: 100%; }
+.product-card .pname { margin: 8px 0 2px !important; font-weight: 600; min-height: 44px; color: inherit; }
+.badge-ref {
+  position: absolute; top: 8px; left: 8px; z-index: 1; background: var(--brand); color: #fff;
+  font-weight: 700; font-size: 12px; border-radius: 8px; padding: 1px 7px;
+}
+.rating { font-size: 12px; } .rating .anticon { color: #f5a623; }
+.label { margin: 6px 0; font-size: 12px; }
+.mrp { text-decoration: line-through; color: var(--muted); font-size: 12px; }
+.qty { gap: 6px; } .qty span { min-width: 18px; text-align: center; font-weight: 700; }
+.variant-row { padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; }
+.timings { margin-bottom: 12px; }
+.code { font-size: 11px; background: var(--bubble-ai); padding: 6px 8px; border-radius: 8px; margin: 4px 0; white-space: pre-wrap; }
+.clickable { cursor: pointer; }
+
+@media (max-width: 900px) {
+  .assistant-panel { position: fixed; right: 0; top: 68px; z-index: 30; width: 100%; max-width: 420px; box-shadow: -8px 0 24px rgba(0,0,0,.12); }
+  .logo-text, .kbd, .user-select { display: none; }
+  .header { gap: 8px; padding: 0 12px !important; }
+  .content { padding: 16px; }
+}
+.main-row { flex-direction: row !important; align-items: flex-start; }
+.content { min-width: 0; }

@@ -1,0 +1,7 @@
+[project]
+name = "converse-finetune"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "mlx-lm>=0.32.2",
+]

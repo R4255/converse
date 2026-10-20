@@ -1,0 +1,2533 @@
+{
+ "queries": 71,
+ "k": 10,
+ "modes": [
+  {
+   "mode": "bm25",
+   "recall@10": 0.817,
+   "ndcg@10": 0.795,
+   "mrr@10": 0.841,
+   "p50_ms": 0.1,
+   "p95_ms": 0.2
+  },
+  {
+   "mode": "dense",
+   "recall@10": 0.895,
+   "ndcg@10": 0.855,
+   "mrr@10": 0.887,
+   "p50_ms": 26.9,
+   "p95_ms": 39.2
+  },
+  {
+   "mode": "hybrid",
+   "recall@10": 0.921,
+   "ndcg@10": 0.876,
+   "mrr@10": 0.899,
+   "p50_ms": 27.3,
+   "p95_ms": 36.3
+  },
+  {
+   "mode": "rerank",
+   "recall@10": 0.922,
+   "ndcg@10": 0.89,
+   "mrr@10": 0.908,
+   "p50_ms": 147.8,
+   "p95_ms": 171.2
+  },
+  {
+   "mode": "full",
+   "recall@10": 0.806,
+   "ndcg@10": 0.79,
+   "mrr@10": 0.864,
+   "p50_ms": 152.1,
+   "p95_ms": 177.0
+  }
+ ],
+ "per_query": [
+  {
+   "mode": "bm25",
+   "query": "doodh",
+   "recall": 0.8,
+   "ndcg": 0.714,
+   "mrr": 0.5
+  },
+  {
+   "mode": "bm25",
+   "query": "dahi",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "anda",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "chawal",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "namkeen",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "chai patti",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "cold drink",
+   "recall": 0.25,
+   "ndcg": 0.149,
+   "mrr": 0.111
+  },
+  {
+   "mode": "bm25",
+   "query": "biscuits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "instant noodles",
+   "recall": 1.0,
+   "ndcg": 0.971,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "ice cream",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "cooking oil",
+   "recall": 0.889,
+   "ndcg": 0.906,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "dal",
+   "recall": 0.7,
+   "ndcg": 0.772,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "masala",
+   "recall": 0.4,
+   "ndcg": 0.539,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "bread",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "chocolates",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "fresh fruits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "sabzi",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "bm25",
+   "query": "juice",
+   "recall": 0.667,
+   "ndcg": 0.775,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "cereal",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "bm25",
+   "query": "shampoo",
+   "recall": 0.5,
+   "ndcg": 0.637,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "diapers",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "chicken",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "fish",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "paneer",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "ghee",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "atta",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "bread without maida",
+   "recall": 0.833,
+   "ndcg": 0.694,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "something for pav bhaji",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "protein for the gym",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "milk for someone lactose intolerant",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "fizzy drink without sugar",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "bm25",
+   "query": "stuff to clean the floor",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "wash dishes",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "bm25",
+   "query": "clothes washing powder",
+   "recall": 1.0,
+   "ndcg": 0.698,
+   "mrr": 0.5
+  },
+  {
+   "mode": "bm25",
+   "query": "pizza cheese",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "pasta sauce",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "hydrating drink after workout",
+   "recall": 1.0,
+   "ndcg": 0.653,
+   "mrr": 0.333
+  },
+  {
+   "mode": "bm25",
+   "query": "crunchy spread for toast",
+   "recall": 1.0,
+   "ndcg": 0.551,
+   "mrr": 0.25
+  },
+  {
+   "mode": "bm25",
+   "query": "sweet spread for kids breakfast",
+   "recall": 0.333,
+   "ndcg": 0.39,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "frozen potato snacks",
+   "recall": 0.5,
+   "ndcg": 0.264,
+   "mrr": 0.25
+  },
+  {
+   "mode": "bm25",
+   "query": "tissue paper",
+   "recall": 1.0,
+   "ndcg": 0.906,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "kids nutrition drink",
+   "recall": 1.0,
+   "ndcg": 0.501,
+   "mrr": 0.25
+  },
+  {
+   "mode": "bm25",
+   "query": "baby food",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "leafy greens",
+   "recall": 0.5,
+   "ndcg": 0.521,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "caffeine boost",
+   "recall": 0.333,
+   "ndcg": 0.494,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "salty snacks for a party",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "bm25",
+   "query": "chips that are not fried",
+   "recall": 0.75,
+   "ndcg": 0.75,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "sunscreen",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "dandruff",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "teeth cleaning",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "bm25",
+   "query": "soap",
+   "recall": 0.6,
+   "ndcg": 0.723,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "korean noodles",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "ready meal to heat and eat",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "muesli",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "oats",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "sugar free snacks",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "sugar free drinks",
+   "recall": 0.444,
+   "ndcg": 0.522,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "high protein dairy",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "vegan milk",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "gluten free breakfast",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "organic dal",
+   "recall": 0.5,
+   "ndcg": 0.613,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "organic rice",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "low fat milk",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "whole grain bread",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "high fiber breakfast",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "healthy chips",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "organic fruits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "organic vegetables",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "diabetic friendly sweets",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "lean meat",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "bm25",
+   "query": "gluten free flour",
+   "recall": 1.0,
+   "ndcg": 0.693,
+   "mrr": 0.5
+  },
+  {
+   "mode": "dense",
+   "query": "doodh",
+   "recall": 0.6,
+   "ndcg": 0.462,
+   "mrr": 0.25
+  },
+  {
+   "mode": "dense",
+   "query": "dahi",
+   "recall": 0.667,
+   "ndcg": 0.775,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "anda",
+   "recall": 0.667,
+   "ndcg": 0.384,
+   "mrr": 0.25
+  },
+  {
+   "mode": "dense",
+   "query": "chawal",
+   "recall": 0.571,
+   "ndcg": 0.582,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "namkeen",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "chai patti",
+   "recall": 0.5,
+   "ndcg": 0.459,
+   "mrr": 0.5
+  },
+  {
+   "mode": "dense",
+   "query": "cold drink",
+   "recall": 1.0,
+   "ndcg": 0.996,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "biscuits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "instant noodles",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "ice cream",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "cooking oil",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "dal",
+   "recall": 0.9,
+   "ndcg": 0.927,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "masala",
+   "recall": 0.6,
+   "ndcg": 0.652,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "bread",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "chocolates",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "fresh fruits",
+   "recall": 0.9,
+   "ndcg": 0.934,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "sabzi",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "dense",
+   "query": "juice",
+   "recall": 0.833,
+   "ndcg": 0.876,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "cereal",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "shampoo",
+   "recall": 1.0,
+   "ndcg": 0.884,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "diapers",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "chicken",
+   "recall": 1.0,
+   "ndcg": 0.983,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "fish",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "paneer",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "ghee",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "atta",
+   "recall": 1.0,
+   "ndcg": 0.905,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "bread without maida",
+   "recall": 0.667,
+   "ndcg": 0.602,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "something for pav bhaji",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "protein for the gym",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "milk for someone lactose intolerant",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "fizzy drink without sugar",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "stuff to clean the floor",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "wash dishes",
+   "recall": 1.0,
+   "ndcg": 0.983,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "clothes washing powder",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "pizza cheese",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "pasta sauce",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "hydrating drink after workout",
+   "recall": 1.0,
+   "ndcg": 0.599,
+   "mrr": 0.333
+  },
+  {
+   "mode": "dense",
+   "query": "crunchy spread for toast",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "sweet spread for kids breakfast",
+   "recall": 0.833,
+   "ndcg": 0.587,
+   "mrr": 0.5
+  },
+  {
+   "mode": "dense",
+   "query": "frozen potato snacks",
+   "recall": 1.0,
+   "ndcg": 0.605,
+   "mrr": 0.5
+  },
+  {
+   "mode": "dense",
+   "query": "tissue paper",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "kids nutrition drink",
+   "recall": 1.0,
+   "ndcg": 0.624,
+   "mrr": 0.5
+  },
+  {
+   "mode": "dense",
+   "query": "baby food",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "leafy greens",
+   "recall": 0.25,
+   "ndcg": 0.118,
+   "mrr": 0.111
+  },
+  {
+   "mode": "dense",
+   "query": "caffeine boost",
+   "recall": 0.833,
+   "ndcg": 0.677,
+   "mrr": 0.5
+  },
+  {
+   "mode": "dense",
+   "query": "salty snacks for a party",
+   "recall": 0.5,
+   "ndcg": 0.615,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "chips that are not fried",
+   "recall": 0.75,
+   "ndcg": 0.754,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "sunscreen",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "dandruff",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "teeth cleaning",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "soap",
+   "recall": 0.8,
+   "ndcg": 0.869,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "korean noodles",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "ready meal to heat and eat",
+   "recall": 1.0,
+   "ndcg": 0.99,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "muesli",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "oats",
+   "recall": 1.0,
+   "ndcg": 0.995,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "sugar free snacks",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "sugar free drinks",
+   "recall": 0.444,
+   "ndcg": 0.553,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "high protein dairy",
+   "recall": 0.7,
+   "ndcg": 0.71,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "vegan milk",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "gluten free breakfast",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "organic dal",
+   "recall": 1.0,
+   "ndcg": 0.92,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "organic rice",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "low fat milk",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "whole grain bread",
+   "recall": 1.0,
+   "ndcg": 0.716,
+   "mrr": 0.5
+  },
+  {
+   "mode": "dense",
+   "query": "high fiber breakfast",
+   "recall": 0.8,
+   "ndcg": 0.82,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "healthy chips",
+   "recall": 1.0,
+   "ndcg": 0.651,
+   "mrr": 0.5
+  },
+  {
+   "mode": "dense",
+   "query": "organic fruits",
+   "recall": 0.8,
+   "ndcg": 0.864,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "organic vegetables",
+   "recall": 0.9,
+   "ndcg": 0.927,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "diabetic friendly sweets",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "lean meat",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "dense",
+   "query": "gluten free flour",
+   "recall": 1.0,
+   "ndcg": 0.693,
+   "mrr": 0.5
+  },
+  {
+   "mode": "hybrid",
+   "query": "doodh",
+   "recall": 0.9,
+   "ndcg": 0.931,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "dahi",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "anda",
+   "recall": 1.0,
+   "ndcg": 0.871,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "chawal",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "namkeen",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "chai patti",
+   "recall": 1.0,
+   "ndcg": 0.988,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "cold drink",
+   "recall": 0.75,
+   "ndcg": 0.732,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "biscuits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "instant noodles",
+   "recall": 1.0,
+   "ndcg": 0.984,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "ice cream",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "cooking oil",
+   "recall": 0.889,
+   "ndcg": 0.926,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "dal",
+   "recall": 0.8,
+   "ndcg": 0.851,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "masala",
+   "recall": 0.4,
+   "ndcg": 0.564,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "bread",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "chocolates",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "fresh fruits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "sabzi",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "juice",
+   "recall": 0.833,
+   "ndcg": 0.876,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "cereal",
+   "recall": 1.0,
+   "ndcg": 0.618,
+   "mrr": 0.333
+  },
+  {
+   "mode": "hybrid",
+   "query": "shampoo",
+   "recall": 1.0,
+   "ndcg": 0.884,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "diapers",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "chicken",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "fish",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "paneer",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "ghee",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "atta",
+   "recall": 1.0,
+   "ndcg": 0.956,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "bread without maida",
+   "recall": 1.0,
+   "ndcg": 0.825,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "something for pav bhaji",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "protein for the gym",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "milk for someone lactose intolerant",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "fizzy drink without sugar",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "stuff to clean the floor",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "wash dishes",
+   "recall": 0.5,
+   "ndcg": 0.23,
+   "mrr": 0.111
+  },
+  {
+   "mode": "hybrid",
+   "query": "clothes washing powder",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "pizza cheese",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "pasta sauce",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "hydrating drink after workout",
+   "recall": 1.0,
+   "ndcg": 0.653,
+   "mrr": 0.333
+  },
+  {
+   "mode": "hybrid",
+   "query": "crunchy spread for toast",
+   "recall": 1.0,
+   "ndcg": 0.618,
+   "mrr": 0.333
+  },
+  {
+   "mode": "hybrid",
+   "query": "sweet spread for kids breakfast",
+   "recall": 0.833,
+   "ndcg": 0.783,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "frozen potato snacks",
+   "recall": 1.0,
+   "ndcg": 0.491,
+   "mrr": 0.333
+  },
+  {
+   "mode": "hybrid",
+   "query": "tissue paper",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "kids nutrition drink",
+   "recall": 1.0,
+   "ndcg": 0.651,
+   "mrr": 0.5
+  },
+  {
+   "mode": "hybrid",
+   "query": "baby food",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "leafy greens",
+   "recall": 0.5,
+   "ndcg": 0.286,
+   "mrr": 0.25
+  },
+  {
+   "mode": "hybrid",
+   "query": "caffeine boost",
+   "recall": 0.833,
+   "ndcg": 0.828,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "salty snacks for a party",
+   "recall": 0.125,
+   "ndcg": 0.076,
+   "mrr": 0.111
+  },
+  {
+   "mode": "hybrid",
+   "query": "chips that are not fried",
+   "recall": 1.0,
+   "ndcg": 0.867,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "sunscreen",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "dandruff",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "teeth cleaning",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "soap",
+   "recall": 0.8,
+   "ndcg": 0.869,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "korean noodles",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "ready meal to heat and eat",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "muesli",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "oats",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "sugar free snacks",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "sugar free drinks",
+   "recall": 0.444,
+   "ndcg": 0.538,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "high protein dairy",
+   "recall": 0.8,
+   "ndcg": 0.858,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "vegan milk",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "gluten free breakfast",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "organic dal",
+   "recall": 1.0,
+   "ndcg": 0.79,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "organic rice",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "low fat milk",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "whole grain bread",
+   "recall": 1.0,
+   "ndcg": 0.983,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "high fiber breakfast",
+   "recall": 1.0,
+   "ndcg": 0.99,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "healthy chips",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "organic fruits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "organic vegetables",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "diabetic friendly sweets",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "lean meat",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "hybrid",
+   "query": "gluten free flour",
+   "recall": 1.0,
+   "ndcg": 0.693,
+   "mrr": 0.5
+  },
+  {
+   "mode": "rerank",
+   "query": "doodh",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "dahi",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "anda",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "chawal",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "namkeen",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "chai patti",
+   "recall": 1.0,
+   "ndcg": 0.798,
+   "mrr": 0.5
+  },
+  {
+   "mode": "rerank",
+   "query": "cold drink",
+   "recall": 0.375,
+   "ndcg": 0.539,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "biscuits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "instant noodles",
+   "recall": 1.0,
+   "ndcg": 0.993,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "ice cream",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "cooking oil",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "dal",
+   "recall": 0.9,
+   "ndcg": 0.934,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "masala",
+   "recall": 0.5,
+   "ndcg": 0.627,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "bread",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "chocolates",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "fresh fruits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "sabzi",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "rerank",
+   "query": "juice",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "cereal",
+   "recall": 1.0,
+   "ndcg": 0.68,
+   "mrr": 0.5
+  },
+  {
+   "mode": "rerank",
+   "query": "shampoo",
+   "recall": 0.5,
+   "ndcg": 0.637,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "diapers",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "chicken",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "fish",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "paneer",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "ghee",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "atta",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "bread without maida",
+   "recall": 1.0,
+   "ndcg": 0.82,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "something for pav bhaji",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "protein for the gym",
+   "recall": 1.0,
+   "ndcg": 0.975,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "milk for someone lactose intolerant",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "fizzy drink without sugar",
+   "recall": 1.0,
+   "ndcg": 0.571,
+   "mrr": 0.333
+  },
+  {
+   "mode": "rerank",
+   "query": "stuff to clean the floor",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "wash dishes",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "clothes washing powder",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "pizza cheese",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "pasta sauce",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "hydrating drink after workout",
+   "recall": 1.0,
+   "ndcg": 0.588,
+   "mrr": 0.25
+  },
+  {
+   "mode": "rerank",
+   "query": "crunchy spread for toast",
+   "recall": 1.0,
+   "ndcg": 0.618,
+   "mrr": 0.333
+  },
+  {
+   "mode": "rerank",
+   "query": "sweet spread for kids breakfast",
+   "recall": 1.0,
+   "ndcg": 0.984,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "frozen potato snacks",
+   "recall": 0.5,
+   "ndcg": 0.387,
+   "mrr": 0.5
+  },
+  {
+   "mode": "rerank",
+   "query": "tissue paper",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "kids nutrition drink",
+   "recall": 1.0,
+   "ndcg": 0.431,
+   "mrr": 0.2
+  },
+  {
+   "mode": "rerank",
+   "query": "baby food",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "leafy greens",
+   "recall": 0.5,
+   "ndcg": 0.363,
+   "mrr": 0.333
+  },
+  {
+   "mode": "rerank",
+   "query": "caffeine boost",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "salty snacks for a party",
+   "recall": 0.375,
+   "ndcg": 0.539,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "chips that are not fried",
+   "recall": 0.75,
+   "ndcg": 0.754,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "sunscreen",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "dandruff",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "teeth cleaning",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "soap",
+   "recall": 0.8,
+   "ndcg": 0.844,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "korean noodles",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "ready meal to heat and eat",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "muesli",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "oats",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "sugar free snacks",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "sugar free drinks",
+   "recall": 0.444,
+   "ndcg": 0.568,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "high protein dairy",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "vegan milk",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "gluten free breakfast",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "organic dal",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "organic rice",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "low fat milk",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "whole grain bread",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "high fiber breakfast",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "healthy chips",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "organic fruits",
+   "recall": 0.8,
+   "ndcg": 0.87,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "organic vegetables",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "diabetic friendly sweets",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "lean meat",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "rerank",
+   "query": "gluten free flour",
+   "recall": 1.0,
+   "ndcg": 0.693,
+   "mrr": 0.5
+  },
+  {
+   "mode": "full",
+   "query": "doodh",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "dahi",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "anda",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "chawal",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "namkeen",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "chai patti",
+   "recall": 0.5,
+   "ndcg": 0.507,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "cold drink",
+   "recall": 0.625,
+   "ndcg": 0.515,
+   "mrr": 0.5
+  },
+  {
+   "mode": "full",
+   "query": "biscuits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "instant noodles",
+   "recall": 1.0,
+   "ndcg": 0.984,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "ice cream",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "cooking oil",
+   "recall": 0.222,
+   "ndcg": 0.188,
+   "mrr": 0.333
+  },
+  {
+   "mode": "full",
+   "query": "dal",
+   "recall": 0.9,
+   "ndcg": 0.934,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "masala",
+   "recall": 0.4,
+   "ndcg": 0.343,
+   "mrr": 0.333
+  },
+  {
+   "mode": "full",
+   "query": "bread",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "chocolates",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "fresh fruits",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "sabzi",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "full",
+   "query": "juice",
+   "recall": 0.833,
+   "ndcg": 0.892,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "cereal",
+   "recall": 1.0,
+   "ndcg": 0.68,
+   "mrr": 0.5
+  },
+  {
+   "mode": "full",
+   "query": "shampoo",
+   "recall": 0.5,
+   "ndcg": 0.637,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "diapers",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "chicken",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "fish",
+   "recall": 1.0,
+   "ndcg": 0.901,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "paneer",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "ghee",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "atta",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "bread without maida",
+   "recall": 0.167,
+   "ndcg": 0.303,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "something for pav bhaji",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "protein for the gym",
+   "recall": 1.0,
+   "ndcg": 0.975,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "milk for someone lactose intolerant",
+   "recall": 0.4,
+   "ndcg": 0.553,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "fizzy drink without sugar",
+   "recall": 0.5,
+   "ndcg": 0.264,
+   "mrr": 0.25
+  },
+  {
+   "mode": "full",
+   "query": "stuff to clean the floor",
+   "recall": 0.0,
+   "ndcg": 0.0,
+   "mrr": 0.0
+  },
+  {
+   "mode": "full",
+   "query": "wash dishes",
+   "recall": 0.75,
+   "ndcg": 0.527,
+   "mrr": 0.5
+  },
+  {
+   "mode": "full",
+   "query": "clothes washing powder",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "pizza cheese",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "pasta sauce",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "hydrating drink after workout",
+   "recall": 0.25,
+   "ndcg": 0.168,
+   "mrr": 0.25
+  },
+  {
+   "mode": "full",
+   "query": "crunchy spread for toast",
+   "recall": 1.0,
+   "ndcg": 0.618,
+   "mrr": 0.333
+  },
+  {
+   "mode": "full",
+   "query": "sweet spread for kids breakfast",
+   "recall": 1.0,
+   "ndcg": 0.984,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "frozen potato snacks",
+   "recall": 0.5,
+   "ndcg": 0.387,
+   "mrr": 0.5
+  },
+  {
+   "mode": "full",
+   "query": "tissue paper",
+   "recall": 0.5,
+   "ndcg": 0.637,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "kids nutrition drink",
+   "recall": 1.0,
+   "ndcg": 0.482,
+   "mrr": 0.25
+  },
+  {
+   "mode": "full",
+   "query": "baby food",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "leafy greens",
+   "recall": 0.25,
+   "ndcg": 0.195,
+   "mrr": 0.333
+  },
+  {
+   "mode": "full",
+   "query": "caffeine boost",
+   "recall": 0.167,
+   "ndcg": 0.13,
+   "mrr": 0.25
+  },
+  {
+   "mode": "full",
+   "query": "salty snacks for a party",
+   "recall": 0.5,
+   "ndcg": 0.629,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "chips that are not fried",
+   "recall": 0.5,
+   "ndcg": 0.637,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "sunscreen",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "dandruff",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "teeth cleaning",
+   "recall": 0.2,
+   "ndcg": 0.339,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "soap",
+   "recall": 0.6,
+   "ndcg": 0.723,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "korean noodles",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "ready meal to heat and eat",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "muesli",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "oats",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "sugar free snacks",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "sugar free drinks",
+   "recall": 0.444,
+   "ndcg": 0.558,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "high protein dairy",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "vegan milk",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "gluten free breakfast",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "organic dal",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "organic rice",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "low fat milk",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "whole grain bread",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "high fiber breakfast",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "healthy chips",
+   "recall": 1.0,
+   "ndcg": 0.92,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "organic fruits",
+   "recall": 0.6,
+   "ndcg": 0.644,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "organic vegetables",
+   "recall": 0.9,
+   "ndcg": 0.861,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "diabetic friendly sweets",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "lean meat",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  },
+  {
+   "mode": "full",
+   "query": "gluten free flour",
+   "recall": 1.0,
+   "ndcg": 1.0,
+   "mrr": 1.0
+  }
+ ]
+}
