@@ -181,3 +181,25 @@ oil", "find X and add it", "reorder what I bought last Friday"), where the model
 the lookup tool instead of reorder. Some of these are the documented clarification trade-off (asking "which pizza
 sauce?" instead of guessing). Next step if continuing: train the fine-tuned model longer on multi-step traces,
 or add a planner pass for compound requests.
+
+## Post-v6: bugs found while recording the demo
+
+Dry-running the demo script before recording surfaced three issues the eval suite didn't catch:
+
+* **Unfaithful reply text.** After "add the second one", the tool added *Go* Mozzarella, but the LLM's own summary said
+  "Added *Amul* Mozzarella". Successful cart mutations now end with a reply built from the tool result (template early
+  exit), which can't misname what happened. This also saves an LLM call.
+* **"…and check out" stopped short.** The model added the item and set the delivery slot, then replied without opening
+  checkout. If the user said "check out" and no navigate/place_order ran, the app now opens checkout itself
+  (safe: it's only navigation).
+* **UI bug:** the checkout delivery selector showed a raw UTC timestamp, because the API's UTC ISO string didn't
+  string-match the options' +05:30 strings. It now matches by instant.
+
+Lesson: an end-to-end demo is a test, too. The eval asserts state (cart contents, page) but not reply *faithfulness*;
+a reply-vs-tool-result consistency check is a gap worth adding to the suite.
+* **"add the second one" added item #1** (found by the user watching the demo). The model correctly asked for
+  `"#2 Amul Mozzarella Cheese (200 g)"`, but **brand grounding** saw "Amul", which the user never typed, and stripped it.
+  Its normalisation also removed the `#`, leaving "mozzarella cheese", which resolved to the more popular #1. The guardrail
+  meant to stop invented brands was destroying on-screen references. This is also why eval task `mt-0` kept failing,
+  which I had misattributed to the model. On-screen references (`#n …`) now bypass brand and count rewriting
+  (regression test added).

@@ -54,7 +54,10 @@ HISTORY_TURNS = 4
 # Tools whose outcome is fully visible on screen. If a step ends with one of these, succeeded, and the
 # user didn't ask a question, we reply from a template instead of paying for another LLM round trip.
 UI_TERMINAL = {"navigate", "view_cart", "search_products", "find_orders", "place_order", "clear_cart",
-               "set_reminder", "reorder", "set_delivery_slot"}
+               "set_reminder", "reorder", "set_delivery_slot",
+               # cart mutations too: a reply built from the tool result can't misname what was added
+               # (the LLM once wrote "Amul Mozzarella" after the tool added Go Mozzarella)
+               "add_to_cart", "update_cart_item"}
 # Replies that claim a state change. If no tool ran this turn, the model hallucinated the action.
 _CLAIMS_ACTION = re.compile(r"\b((add|remov|plac|updat|empt|clear|reorder)(ed|ing|ied)|empties|"
                             r"set (a|your) reminder|confirm (it )?on (the )?screen|are you sure|"
@@ -63,6 +66,7 @@ _CLAIMS_ACTION = re.compile(r"\b((add|remov|plac|updat|empt|clear|reorder)(ed|in
 # If a turn ends with no tool call for one of these, the model answered from memory: force a retry.
 _MUST_ACT = re.compile(r"\b(show|find|open|search|look ?up|add|put|remove|delete|reorder|order|buy|take me|go to|"
                        r"checkout|check out|deliver\w*|remind|what did i (buy|order)|cheapest|best)\b", re.I)
+_CHECKOUT = re.compile(r"\bcheck ?out\b", re.I)
 _QUESTION = re.compile(r"\?|^(what|which|how|why|is|are|does|do|can|could|should|when|did)\b", re.I)
 
 
@@ -181,6 +185,17 @@ class Agent:
                                           "retrying without conversation history"})
                             messages = [messages[0], {"role": "user", "content": user_msg}]
                             continue
+                        done_now = {st["tool"] for st in steps if st["kind"] == "tool" and not st.get("error")}
+                        if ran_tools and _CHECKOUT.search(req.message) and not done_now & {"navigate", "place_order"} \
+                                and not _ORDER_INTENT.search(req.message):
+                            # The user asked to go to checkout and the model stopped short: open it (navigation is safe).
+                            steps.append({"kind": "verifier", "note": "unfulfilled checkout intent; navigating"})
+                            result, step = await run_tool("navigate", {"page": "checkout"})
+                            steps.append(step)
+                            for ev in new_ui():
+                                yield ev
+                            reply = _template_reply([st for st in steps if st["kind"] == "tool" and not st.get("error")])
+                            break
                         if not ran_tools and retried and _ORDER_INTENT.search(req.message):
                             # The model refused or only *described* placing the order, even after a retry.
                             # Safe deterministic fallback: place_order only ever creates a confirmation card.
@@ -299,7 +314,7 @@ def _template_reply(tool_steps: list[dict]) -> str:
             parts.append("Please confirm on screen")
         else:
             parts.append(st.get("summary", "Done"))
-    return ". ".join(parts) + "."
+    return ". ".join(p.rstrip(".") for p in parts) + "."
 
 
 def _fast_reply(tool: str, result: ToolResult | None, step: dict) -> str:

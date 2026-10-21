@@ -10,6 +10,9 @@ Postgres + pgvector, and AWS services (SQS, S3, EventBridge Scheduler) on LocalS
 
 ![checkout](docs/img/04-checkout.png)
 
+▶️ **[Watch the 35-second demo](docs/video/converse-demo-2x.mp4)** (real responses from the local 7B, shown at 2× speed;
+recorded by [`frontend/scripts/demo-video.mjs`](frontend/scripts/demo-video.mjs)).
+
 ## Results
 
 All numbers come from the eval harness in [`backend/evals`](backend/evals): 130 tasks / 143 turns in 11

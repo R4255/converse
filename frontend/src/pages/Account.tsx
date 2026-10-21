@@ -78,6 +78,14 @@ export function Checkout() {
       nav(`/orders/${o.order_id}`)
     } catch (e: any) { message.error(e.message) } finally { setPlacing(false) }
   }
+  // The API returns the chosen slot in UTC while options are in local time: match by instant, not by string.
+  const chosen = cart?.delivery_slot ? Date.parse(cart.delivery_slot) : null
+  const match = slots.find((s) => s.start && Date.parse(s.start) === chosen)
+  const selectedSlot = chosen == null ? null : match ? match.start : cart!.delivery_slot
+  const slotOptions = [
+    ...slots.map((s) => ({ value: s.start, label: s.label })),
+    ...(chosen != null && !match ? [{ value: cart!.delivery_slot, label: cart!.delivery_label }] : []),
+  ]
   if (cart && !cart.items.length) return <Result status="info" title="Nothing to check out" extra={<Link to="/">Continue shopping</Link>} />
   return (
     <Row gutter={20}>
@@ -85,8 +93,8 @@ export function Checkout() {
         <Typography.Title level={4}>Checkout</Typography.Title>
         <Card title="Deliver to" size="small" style={{ marginBottom: 12 }}>{me ? <><b>{me.name}</b><div>{me.address}</div></> : <Skeleton active />}</Card>
         <Card title="Delivery time" size="small" style={{ marginBottom: 12 }}>
-          <Select style={{ width: '100%' }} value={cart?.delivery_slot ?? null} loading={!slots.length}
-            options={slots.map((s) => ({ value: s.start, label: s.label }))}
+          <Select style={{ width: '100%' }} value={selectedSlot} loading={!slots.length}
+            options={slotOptions}
             onChange={async (v) => setCart(await api.setSlot(v))} />
         </Card>
         <Card title="Items" size="small"><CartLines editable={false} /></Card>

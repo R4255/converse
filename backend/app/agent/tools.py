@@ -226,6 +226,10 @@ def _ground_line(line: CartLine, message: str) -> CartLine:
         return line
     msg = message.lower()
     upd: dict = {}
+    # "#2 Amul Mozzarella" points at an item on screen: the "#n" is the reference and the name is just a label
+    # the model copied from the screen. Brand/count rewriting would destroy the "#n" (it did: "#2 Amul…" became
+    # "mozzarella cheese" and resolved to the more popular #1), so only sizes/quantities are grounded here.
+    on_screen_ref = bool(re.match(r"\s*#\s*\d{1,2}\b", line.product))
     if line.size:
         digits = re.findall(r"\d+(?:\.\d+)?", line.size)
         words = re.findall(r"[a-z]+", line.size.lower())
@@ -238,13 +242,13 @@ def _ground_line(line: CartLine, message: str) -> CartLine:
     from app.agent.resolvers import _apply_aliases, _brand_in, _norm
 
     said = f"{_norm(msg)} {_norm(_apply_aliases(msg))}"  # original words too: "coke" must count as said
-    if (brand := _brand_in(line.product)) and brand not in said and brand.split()[0] not in said:
+    if not on_screen_ref and (brand := _brand_in(line.product)) and brand not in said and brand.split()[0] not in said:
         # the model added a brand the user never said ("soy milk" -> "Amul Soya Milk"): drop it
         stripped = re.sub(rf"\b{re.escape(brand.split()[0])}\b", " ", _norm(line.product))
         upd["product"] = re.sub(r"\s+", " ", stripped).strip() or line.product
     lead = re.match(r"^\s*(\d{1,3})\s+(?:(?:cans?|packs?|packets?|bottles?|boxes|bags?|pieces|pcs)\s+of\s+)?(.+)$",
                     upd.get("product", line.product), re.I)
-    if lead and (int(lead[1]) == line.quantity or line.quantity == 1):
+    if lead and not on_screen_ref and (int(lead[1]) == line.quantity or line.quantity == 1):
         if not re.match(r"^\s*\d+(\.\d+)?\s*(ml|l|ltr|litre|liter|g|gm|kg)\b", upd.get("product", line.product), re.I):
             upd["product"], line = lead[2], line.model_copy(update={"quantity": int(lead[1])})
     if "dozen" in msg and line.quantity % 12 == 0:  # "2 dozen eggs" = 2 packs of 12, not 24 loose items

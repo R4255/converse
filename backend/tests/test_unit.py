@@ -136,3 +136,10 @@ def test_tonight_small_hours_mean_tomorrow():
     now = datetime(2026, 10, 19, 12, 0, tzinfo=ZoneInfo("Asia/Kolkata"))
     r = resolve_delivery_time("tonight at 3 am", now)
     assert (r.start.day, r.start.hour) == (20, 6) and "6 AM" in r.note
+
+
+def test_on_screen_reference_survives_grounding():
+    from app.agent.tools import CartLine, _ground_line
+
+    out = _ground_line(CartLine(product="#2 Amul Mozzarella Cheese (200 g)"), "add the second one")
+    assert out.product.startswith("#2")
