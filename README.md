@@ -122,7 +122,7 @@ Everything in containers (Ollama stays on the host for GPU access): `make up`.
 
 | | |
 |---|---|
-| `make test` | 67 tests: unit, resolver regressions, integration (idempotency, locking, outbox, confirmation tokens), MCP over stdio |
+| `make test` | 73 tests: unit, resolver regressions, integration (idempotency, locking, outbox, confirmation tokens), MCP over stdio |
 | `make evals` | agent eval suite; `TAG=x` names the run. Use `--model`, `--no-router`, `--no-early-exit` for ablations |
 | `make eval-retrieval` | retrieval ablation |
 | `make mcp` | MCP server over stdio |

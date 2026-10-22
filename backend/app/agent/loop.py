@@ -65,7 +65,9 @@ _CLAIMS_ACTION = re.compile(r"\b((add|remov|plac|updat|empt|clear|reorder)(ed|in
 # Requests that can only be satisfied by a tool (the screen must change or data must be fetched fresh).
 # If a turn ends with no tool call for one of these, the model answered from memory: force a retry.
 _MUST_ACT = re.compile(r"\b(show|find|open|search|look ?up|add|put|remove|delete|reorder|order|buy|take me|go to|"
-                       r"checkout|check out|deliver\w*|remind|what did i (buy|order)|cheapest|best)\b", re.I)
+                       r"checkout|check out|deliver\w*|remind|what did i (buy|order)|cheapest|best|"
+                       # quantity edits: "actually make it 3" was once answered with "Update cart to 3?" instead of acting
+                       r"make (it|that|them)|change|set|increase|decrease|reduce|only \d+)\b", re.I)
 _CHECKOUT = re.compile(r"\bcheck ?out\b", re.I)
 _QUESTION = re.compile(r"\?|^(what|which|how|why|is|are|does|do|can|could|should|when|did)\b", re.I)
 
@@ -163,7 +165,7 @@ class Agent:
                 messages = [{"role": "system", "content": system}, *[m for t in memory.get("turns", []) for m in t],
                             {"role": "user", "content": user_msg}]
                 seen_calls: set[str] = set()
-                retried = False
+                retried = parse_retried = False
                 specs = tool_specs()
                 for _ in range(self.max_steps):
                     resp = await self.llm.chat(messages, specs)
@@ -172,6 +174,18 @@ class Agent:
                     steps.append({"kind": "llm", "ms": round(resp.latency_ms, 1), "prompt_tokens": resp.prompt_tokens,
                                   "completion_tokens": resp.completion_tokens,
                                   "tool_calls": [c.name for c in resp.tool_calls], "content": resp.content[:300]})
+                    for err in resp.parse_errors:
+                        # explicit, never silent: a dropped call would look like "the model chose not to act"
+                        steps.append({"kind": "parse_error", "error": err["reason"], "raw": err.get("raw", ""),
+                                      "repaired": err.get("repaired", False)})
+                    unrecovered = [e for e in resp.parse_errors if not e.get("repaired")]
+                    if not resp.tool_calls and unrecovered and not parse_retried:
+                        parse_retried = True
+                        messages += [{"role": "assistant", "content": resp.content or unrecovered[0].get("raw", "")},
+                                     {"role": "user", "content": "[system] Your tool call could not be parsed "
+                                      f"({unrecovered[0]['reason']}). Emit it again as one valid JSON object: "
+                                      '{"name": <tool name>, "arguments": {...}}.'}]
+                        continue
                     if not resp.tool_calls:
                         ran_tools = any(st["kind"] == "tool" for st in steps)
                         claims = _CLAIMS_ACTION.search(resp.content)

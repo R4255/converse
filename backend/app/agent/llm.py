@@ -25,6 +25,9 @@ class LLMResponse:
     completion_tokens: int
     latency_ms: float
     raw_message: dict = field(default_factory=dict)
+    # Tool calls the model attempted but that couldn't be parsed. Surfaced explicitly (trace + eval metric) so a
+    # format problem is never mistaken for the model choosing not to act.
+    parse_errors: list[dict] = field(default_factory=list)
 
 
 class LLMError(Exception):
@@ -102,10 +105,11 @@ class OllamaChat:
         except httpx.HTTPError as e:
             raise LLMError(f"ollama request failed: {e}") from e
         data = r.json()
-        content, calls = parse_qwen_output(data.get("response", ""))
+        content, calls, errors = parse_qwen_output(data.get("response", ""))
         return LLMResponse(content=content, tool_calls=[ToolCall(n, a) for n, a in calls],
                            prompt_tokens=data.get("prompt_eval_count", 0), completion_tokens=data.get("eval_count", 0),
-                           latency_ms=(time.perf_counter() - t0) * 1000, raw_message={"response": data.get("response")})
+                           latency_ms=(time.perf_counter() - t0) * 1000, raw_message={"response": data.get("response")},
+                           parse_errors=errors)
 
     async def chat(self, messages: list[dict], tools: list[dict] | None = None, max_tokens: int = 300) -> LLMResponse:
         if self.raw_mode:
@@ -133,15 +137,24 @@ class OllamaChat:
                     args = {"__raw__": args}
             calls.append(ToolCall(fn.get("name", ""), args))
         content = msg.get("content") or ""
+        errors: list[dict] = []
         if not calls and content:
             known = {t["function"]["name"] for t in tools or []}
             calls = _parse_text_calls(content, known)
             if calls:
                 content = ""
+            elif "<tool_call>" in content:
+                errors.append({"reason": "unparseable <tool_call> text in content", "raw": content[:300]})
+        generated = data.get("eval_count", 0)
+        if not calls and not content.strip() and generated >= 5:
+            # The original train/serve-skew symptom: tokens were generated, yet the server's tool-call parser
+            # returned neither content nor calls. Report it instead of letting it look like "no action".
+            errors.append({"reason": f"model generated {generated} tokens but the server returned no content and "
+                                     "no tool calls (likely an unparseable tool call dropped by the server)"})
         return LLMResponse(content=content.strip(), tool_calls=calls,
                            prompt_tokens=data.get("prompt_eval_count", 0),
-                           completion_tokens=data.get("eval_count", 0),
-                           latency_ms=(time.perf_counter() - t0) * 1000, raw_message=msg)
+                           completion_tokens=generated,
+                           latency_ms=(time.perf_counter() - t0) * 1000, raw_message=msg, parse_errors=errors)
 
     async def warmup(self) -> None:
         try:

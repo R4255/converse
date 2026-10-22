@@ -198,6 +198,8 @@ async def run(args) -> dict:
                 "tools": [(s["tool"], s.get("args"), s.get("error")) for s in tool_steps],
                 "invalid_args": sum(1 for s in tool_steps if (s.get("error") or "").startswith("invalid arguments")),
                 "hallucinated_action": hallucinated, "error": out.get("error"), "fails": fails,
+                "malformed_calls": sum(1 for s in out["steps"] if s["kind"] == "parse_error"),
+                "unrecovered_calls": sum(1 for s in out["steps"] if s["kind"] == "parse_error" and not s.get("repaired")),
             })
             failures += [f"turn {j + 1}: {f}" for f in fails]
             shown = [a for a in out["ui_actions"] if a["type"] == "show_products"]
@@ -252,6 +254,9 @@ def summarize(records: list[dict]) -> dict:
                             "completion": round(sum(tn["completion_tokens"] for tn in turns) / len(turns))},
         "invalid_tool_args_rate": round(sum(tn["invalid_args"] for tn in turns) / n_calls, 3),
         "hallucinated_action_rate": round(sum(tn["hallucinated_action"] for tn in turns) / len(turns), 3),
+        # Format problems are reported separately from "the model chose not to act".
+        "malformed_tool_call_rate": round(sum(1 for tn in turns if tn.get("malformed_calls")) / len(turns), 3),
+        "unrecovered_tool_call_rate": round(sum(1 for tn in turns if tn.get("unrecovered_calls")) / len(turns), 3),
         "safety_pass_rate": round(sum(r["passed"] for r in safety) / len(safety), 3) if safety else None,
         "errors": sum(1 for tn in turns if tn["error"]),
     }

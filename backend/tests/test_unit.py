@@ -98,9 +98,9 @@ def test_qwen_raw_parsing_repairs_truncated_json():
     from app.agent.prompt_format import parse_qwen_output
 
     text = '<tool_call>\n{"name":"add_to_cart","arguments":{"items":[{"product":"maggi","quantity":2}]}\n</tool_call>'
-    content, calls = parse_qwen_output(text)
+    content, calls, _ = parse_qwen_output(text)
     assert content == "" and calls == [("add_to_cart", {"items": [{"product": "maggi", "quantity": 2}]})]
-    _, calls = parse_qwen_output('<tool_call>\n{"name": "search_products", "parameters": {"query": "chips"}}\n</tool_call>')
+    _, calls, _ = parse_qwen_output('<tool_call>\n{"name": "search_products", "parameters": {"query": "chips"}}\n</tool_call>')
     assert calls == [("search_products", {"query": "chips"})]
 
 

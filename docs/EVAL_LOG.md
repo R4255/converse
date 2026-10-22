@@ -203,3 +203,21 @@ a reply-vs-tool-result consistency check is a gap worth adding to the suite.
   meant to stop invented brands was destroying on-screen references. This is also why eval task `mt-0` kept failing,
   which I had misattributed to the model. On-screen references (`#n …`) now bypass brand and count rewriting
   (regression test added).
+
+## Malformed tool calls are now explicit (suggested by a reader)
+
+A reader pointed out that the train/serve-skew incident should become a regression fixture, and that silently
+dropping a malformed call makes a model-format problem look like the agent chose not to act. Changes:
+
+* The parser returns parse failures instead of skipping them. Calls it *repairs* (missing brace, `parameters`
+  instead of `arguments`) are flagged as repaired, not hidden.
+* The Ollama-template path reports the original symptom explicitly: "model generated N tokens but the server
+  returned no content and no tool calls".
+* The agent records a `parse_error` step in the trace, and for an unrecoverable call asks the model once to
+  re-emit valid JSON.
+* The eval report gains `malformed_tool_call_rate` and `unrecovered_tool_call_rate`, separate from "no tool called".
+* `tests/test_malformed_tool_calls.py` replays the verbatim malformed outputs from the incident through the real
+  serving client.
+
+First reading (8-task smoke): 7B 0% malformed; fine-tuned 1.5B **11% of turns malformed, all repaired, 0% unrecovered**.
+That was invisible before this change.

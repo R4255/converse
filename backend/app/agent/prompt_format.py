@@ -60,22 +60,35 @@ def render_qwen(messages: list[dict], tools: list[dict] | None, add_generation_p
 _BLOCK = re.compile(r"<tool_call>\s*(.*?)\s*(?:</tool_call>|$)", re.S)
 
 
-def _loads_lenient(blob: str):
-    """json.loads with small repairs for truncated objects (missing closing braces/brackets)."""
+def _loads_lenient(blob: str) -> tuple[object, str]:
+    """json.loads with small repairs for truncated objects. Returns (value or None, suffix that was appended)."""
     for extra in ("", "}", "}}", "]}", "]}}", "}]}}"):
         try:
-            return json.loads(blob + extra)
+            return json.loads(blob + extra), extra
         except json.JSONDecodeError:
             continue
-    return None
+    return None, ""
 
 
-def parse_qwen_output(text: str) -> tuple[str, list[tuple[str, dict]]]:
-    """Split raw model output into (visible content, [(tool name, arguments)])."""
-    calls = []
+def parse_qwen_output(text: str) -> tuple[str, list[tuple[str, dict]], list[dict]]:
+    """Split raw model output into (visible content, [(tool name, arguments)], [parse errors]).
+
+    A <tool_call> block that can't be repaired is *reported*, never silently dropped: a dropped call is
+    indistinguishable from "the model chose not to act", which hides model-format problems (this is how the
+    fine-tuned model's train/serve skew first showed up: as "no tool called").
+    """
+    calls, errors = [], []
     for blob in _BLOCK.findall(text):
-        obj = _loads_lenient(blob)
-        if isinstance(obj, dict) and obj.get("name"):
+        obj, repair = _loads_lenient(blob)
+        if not isinstance(obj, dict):
+            errors.append({"reason": "invalid JSON in <tool_call>", "raw": blob[:300], "repaired": False})
+        elif not obj.get("name"):
+            errors.append({"reason": "tool call without a name", "raw": blob[:300], "repaired": False})
+        else:
             calls.append((obj["name"], obj.get("arguments") or obj.get("parameters") or {}))
+            if repair or "arguments" not in obj:
+                # recovered, but still a format problem worth seeing in traces and eval metrics
+                what = f"appended {repair!r}" if repair else "used 'parameters' instead of 'arguments'"
+                errors.append({"reason": f"malformed tool call repaired ({what})", "raw": blob[:300], "repaired": True})
     content = _BLOCK.sub("", text).replace("<|im_end|>", "").strip()
-    return content, calls
+    return content, calls, errors
