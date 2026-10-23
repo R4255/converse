@@ -322,6 +322,11 @@ def _template_reply(tool_steps: list[dict]) -> str:
         elif t == "navigate":
             parts.append({"/checkout": "Here's your checkout", "/cart": "Here's your cart",
                           "/orders": "Here are your orders"}.get(r.get("navigated_to"), "Opened it"))
+        elif t == "reorder" and r.get("added") is not None:
+            msg = f"Re-added {len(r['added'])} items from order #{r.get('order_id')}"
+            if r.get("skipped_out_of_stock"):  # never skip silently
+                msg += ". Out of stock, so not added: " + ", ".join(r["skipped_out_of_stock"])
+            parts.append(msg)
         elif t == "set_delivery_slot" and r.get("delivery"):
             parts.append(f"Delivery set for {r['delivery']}" + (f". {r['note'].replace(' Tell the user.', '')}" if r.get("note") else ""))
         elif t == "place_order" or t == "clear_cart":

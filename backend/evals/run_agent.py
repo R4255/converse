@@ -24,10 +24,12 @@ from sqlalchemy import delete, select  # noqa: E402
 
 from app.agent.loop import _CLAIMS_ACTION, Agent, collect  # noqa: E402
 from app.agent.protocol import TurnRequest  # noqa: E402
+from app.config import get_settings  # noqa: E402
 from app.db import SessionLocal  # noqa: E402
 from app.domain import services as svc  # noqa: E402
-from app.domain.models import CartItem, DeliveryPreference, PendingAction, Product, Reminder  # noqa: E402
+from app.domain.models import CartItem, DeliveryPreference, PendingAction, Product, Reminder, Variant  # noqa: E402
 from app.search.engine import search_engine  # noqa: E402
+from evals.heldout import HELDOUT  # noqa: E402
 from evals.tasks import TASKS  # noqa: E402
 
 RESULTS = Path(__file__).parent / "results"
@@ -52,6 +54,45 @@ async def setup(user_id: int, lines: list[dict]) -> None:
             v = next(v for v in p.variants if v.label == ln["label"])
             db.add(CartItem(user_id=user_id, variant_id=v.id, quantity=ln["qty"]))
         await db.commit()
+
+
+async def set_out_of_stock(spec: list) -> list[tuple[int, int]]:
+    """Simulate sold-out items for one task. spec: ["Product"] (all sizes) or [("Product", "label")].
+    Returns the original stock so it can be restored; also updates the search index's in-stock flag."""
+    changed = []
+    async with SessionLocal() as db:
+        for item in spec:
+            name, label = (item, None) if isinstance(item, str) else item
+            p = (await db.execute(select(Product).where(Product.name == name))).scalar_one()
+            for v in p.variants:
+                if label is None or v.label == label:
+                    changed.append((v.id, v.stock))
+                    v.stock = 0
+            await db.flush()
+            search_engine.by_id[p.id].in_stock = any(v.stock > 0 for v in p.variants)
+        await db.commit()
+    return changed
+
+
+async def restore_stock(changed: list[tuple[int, int]]) -> None:
+    if not changed:
+        return
+    async with SessionLocal() as db:
+        for vid, stock in changed:
+            v = await db.get(Variant, vid)
+            v.stock = stock
+            search_engine.by_id[v.product_id].in_stock = True
+        await db.commit()
+
+
+def wilson(k: int, n: int, z: float = 1.96) -> list[float]:
+    """95% Wilson score interval: honest error bars for a pass rate on a small sample."""
+    if n == 0:
+        return [0.0, 0.0]
+    p = k / n
+    centre = (p + z * z / (2 * n)) / (1 + z * z / n)
+    half = z * ((p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5) / (1 + z * z / n)
+    return [round(max(0.0, centre - half), 3), round(min(1.0, centre + half), 3)]
 
 
 async def cart_state(user_id: int) -> list[dict]:
@@ -158,20 +199,38 @@ def check(expect: dict, out: dict, before: list[dict], after: list[dict], prev_s
     return fails
 
 
+async def check_model(model: str | None) -> None:
+    """Fail loudly instead of silently evaluating the default model (an empty --model once made a
+    "4-model comparison" run the 7B four times)."""
+    import httpx
+
+    if model is None:
+        return
+    if not model.strip():
+        raise SystemExit("--model is empty; refusing to fall back to the default model")
+    async with httpx.AsyncClient(base_url=get_settings().ollama_url, timeout=10) as c:
+        names = {m["name"] for m in (await c.get("/api/tags")).json().get("models", [])}
+    if model not in names and f"{model}:latest" not in names:
+        raise SystemExit(f"model {model!r} is not installed in Ollama")
+
+
 async def run(args) -> dict:
+    await check_model(args.model)
     async with SessionLocal() as db:
         await search_engine.build(db)
     await search_engine.warmup()
     agent = Agent(model=args.model, router_enabled=not args.no_router, early_exit=not args.no_early_exit)
     await agent.llm.warmup()
     fx = await fixtures()
-    tasks = [t for t in TASKS if (not args.category or t["category"] in args.category)
+    suite = HELDOUT if args.suite == "heldout" else TASKS
+    tasks = [t for t in suite if (not args.category or t["category"] in args.category)
              and (not args.only or t["id"] in args.only)][: args.limit or None]
 
     records = []
     t_start = time.perf_counter()
     for i, t in enumerate(tasks, 1):
         await setup(t["user"], t["setup_cart"])
+        stock_changes = await set_out_of_stock(t.get("out_of_stock", []))
         session = f"eval-{uuid.uuid4().hex[:10]}"
         prev_shown: list[dict] = []
         turns, failures = [], []
@@ -210,10 +269,11 @@ async def run(args) -> dict:
         mark = "PASS" if ok else "FAIL"
         print(f"[{i:3}/{len(tasks)}] {mark} {t['id']:<12} {turns[-1]['latency_ms'] / 1000:5.1f}s"
               + ("" if ok else f"  {failures[0][:150]}"), flush=True)
+        await restore_stock(stock_changes)
         await setup(t["user"], [])
 
     summary = summarize(records)
-    summary["config"] = {"tag": args.tag, "model": agent.llm.model, "router": agent.router_enabled,
+    summary["config"] = {"suite": args.suite, "tag": args.tag, "model": agent.llm.model, "router": agent.router_enabled,
                          "early_exit": agent.early_exit, "tasks": len(records),
                          "wall_time_s": round(time.perf_counter() - t_start, 1)}
     RESULTS.mkdir(exist_ok=True)
@@ -244,7 +304,11 @@ def summarize(records: list[dict]) -> dict:
     safety = [r for r in records if r["category"] == "safety"]
     return {
         "task_success": round(sum(r["passed"] for r in records) / len(records), 3),
+        "passed": sum(r["passed"] for r in records), "n_tasks": len(records),
+        "task_success_ci95": wilson(sum(r["passed"] for r in records), len(records)),
         "by_category": {c: round(sum(v) / len(v), 3) for c, v in sorted(by_cat.items())},
+        "by_category_counts": {c: {"passed": sum(v), "n": len(v), "ci95": wilson(sum(v), len(v))}
+                               for c, v in sorted(by_cat.items())},
         "turns": len(turns),
         "latency_ms": {"p50": pct(lat, 0.5), "p95": pct(lat, 0.95), "mean": round(statistics.mean(lat), 1) if lat else 0},
         "agent_route_latency_ms": {"p50": pct(agent_lat, 0.5), "p95": pct(agent_lat, 0.95)},
@@ -265,6 +329,7 @@ def summarize(records: list[dict]) -> dict:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag", default="dev")
+    ap.add_argument("--suite", choices=["main", "heldout"], default="main")
     ap.add_argument("--model")
     ap.add_argument("--no-router", action="store_true")
     ap.add_argument("--no-early-exit", action="store_true")

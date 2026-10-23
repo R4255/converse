@@ -45,6 +45,7 @@ ignore = ["B008"]
 
 [tool.ruff.lint.per-file-ignores]
 "evals/tasks.py" = ["E501"]
+"evals/heldout.py" = ["E501"]
 "evals/run_retrieval.py" = ["E501"]
 # prompt text and tool descriptions read better unwrapped
 "app/agent/loop.py" = ["E501"]

@@ -1,0 +1,2610 @@
+{
+ "summary": {
+  "task_success": 0.575,
+  "passed": 23,
+  "n_tasks": 40,
+  "task_success_ci95": [
+   0.422,
+   0.715
+  ],
+  "by_category": {
+   "recovery": 0.438,
+   "unseen_wording": 0.667
+  },
+  "by_category_counts": {
+   "recovery": {
+    "passed": 7,
+    "n": 16,
+    "ci95": [
+     0.231,
+     0.668
+    ]
+   },
+   "unseen_wording": {
+    "passed": 16,
+    "n": 24,
+    "ci95": [
+     0.467,
+     0.82
+    ]
+   }
+  },
+  "turns": 51,
+  "latency_ms": {
+   "p50": 3112.2,
+   "p95": 9161.1,
+   "mean": 3588.9
+  },
+  "agent_route_latency_ms": {
+   "p50": 3112.2,
+   "p95": 9161.1
+  },
+  "fast_route_share": 0.0,
+  "llm_calls_per_turn": 2.59,
+  "tokens_per_turn": {
+   "prompt": 6200,
+   "completion": 77
+  },
+  "invalid_tool_args_rate": 0.015,
+  "hallucinated_action_rate": 0.0,
+  "malformed_tool_call_rate": 0.137,
+  "unrecovered_tool_call_rate": 0.059,
+  "safety_pass_rate": null,
+  "errors": 0,
+  "config": {
+   "suite": "heldout",
+   "tag": "ho-converse-1.5b",
+   "model": "converse-1.5b",
+   "router": true,
+   "early_exit": true,
+   "tasks": 40,
+   "wall_time_s": 184.4
+  }
+ },
+ "records": [
+  {
+   "id": "ho-nav-0",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "let's see what's sitting in my trolley",
+     "reply": "Cart: 1 items, \u20b984.0.",
+     "route": "agent",
+     "latency_ms": 3338.0,
+     "prompt_tokens": 2115,
+     "completion_tokens": 16,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "view_cart",
+       {},
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-nav-1",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "I'm ready to pay, bring up that screen",
+     "reply": "Here's your checkout.",
+     "route": "agent",
+     "latency_ms": 500.2,
+     "prompt_tokens": 2115,
+     "completion_tokens": 19,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "navigate",
+       {
+        "page": "checkout"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-nav-2",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "let me look at everything I've ordered before",
+     "reply": "Found 10 orders (recent).",
+     "route": "agent",
+     "latency_ms": 447.9,
+     "prompt_tokens": 2096,
+     "completion_tokens": 16,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "find_orders",
+       {},
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-ord-0",
+   "category": "unseen_wording",
+   "passed": false,
+   "failures": [
+    "turn 1: expected page /orders/101, got /cart"
+   ],
+   "turns": [
+    {
+     "say": "what did I end up getting on friday last week?",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 7607.0,
+     "prompt_tokens": 15421,
+     "completion_tokens": 221,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "find_orders",
+       {
+        "when": "friday"
+       },
+       null
+      ],
+      [
+       "reorder",
+       {
+        "order": "101"
+       },
+       null
+      ],
+      [
+       "view_cart",
+       {},
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         "1 x Amul Toned Milk (1 L)",
+         "2 x Eggoz Brown Eggs (Pack of 12)",
+         "1 x FarmFresh Spinach (Palak) (250 g)",
+         "1 x Haldiram's Aloo Bhujia (200 g)"
+        ]
+       },
+       "invalid arguments: items.0: Input should be a valid dictionary or instance of CartLine; items.1: Input should be a valid dictionary or instance of CartLine; items.2: Input should be a valid dictionary or instance of CartLine; items.3: Input should be a valid dictionary or instance of CartLine"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "Amul Toned Milk (1 L)",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "Eggoz Brown Eggs (Pack of 12)",
+          "quantity": 2
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 1,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "expected page /orders/101, got /cart"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-ord-1",
+   "category": "unseen_wording",
+   "passed": false,
+   "failures": [
+    "turn 1: expected page /orders/100, got /orders"
+   ],
+   "turns": [
+    {
+     "say": "find that january 5th receipt for me",
+     "reply": "Here are your orders.",
+     "route": "agent",
+     "latency_ms": 700.2,
+     "prompt_tokens": 2097,
+     "completion_tokens": 29,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "navigate",
+       {
+        "page": "orders",
+        "when": "january 5th"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "expected page /orders/100, got /orders"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-ord-2",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "anything I bought during september?",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 4097.7,
+     "prompt_tokens": 15743,
+     "completion_tokens": 132,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "find_orders",
+       {
+        "when": "september"
+       },
+       null
+      ],
+      [
+       "find_orders",
+       {
+        "when": "september"
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "find_orders",
+       {
+        "when": "september"
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "find_orders",
+       {
+        "when": "september"
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "find_orders",
+       {
+        "when": "september"
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "find_orders",
+       {
+        "when": "september"
+       },
+       "duplicate call suppressed"
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-ord-3",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "have I ever picked up spinach?",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 5198.7,
+     "prompt_tokens": 14948,
+     "completion_tokens": 196,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "find_orders",
+       {
+        "contains": "spinach"
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "spinach (palak)",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "spinach (palak)",
+          "quantity": 2
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "spinach (palak)",
+          "quantity": 2
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "spinach (palak)",
+          "quantity": 3
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "spinach (palak)",
+          "quantity": 4
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-srch-0",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "is there anything sugar-free I can munch on?",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 5014.0,
+     "prompt_tokens": 17268,
+     "completion_tokens": 125,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "search_products",
+       {
+        "query": "sugar-free"
+       },
+       null
+      ],
+      [
+       "get_product_details",
+       {
+        "product": "#1"
+       },
+       null
+      ],
+      [
+       "get_product_details",
+       {
+        "product": "#2"
+       },
+       null
+      ],
+      [
+       "search_products",
+       {
+        "query": "#2"
+       },
+       null
+      ],
+      [
+       "get_product_details",
+       {
+        "product": "#1"
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "search_products",
+       {
+        "query": "#2"
+       },
+       "duplicate call suppressed"
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-srch-1",
+   "category": "unseen_wording",
+   "passed": false,
+   "failures": [
+    "turn 1: products above \u20b930"
+   ],
+   "turns": [
+    {
+     "say": "cheap crisps please, nothing over 30 bucks",
+     "reply": "Here are 8 options.",
+     "route": "agent",
+     "latency_ms": 837.8,
+     "prompt_tokens": 2098,
+     "completion_tokens": 29,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "search_products",
+       {
+        "query": "crisps",
+        "sort": "price_low"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "products above \u20b930"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-srch-2",
+   "category": "unseen_wording",
+   "passed": false,
+   "failures": [
+    "turn 1: forbidden tool add_to_cart"
+   ],
+   "turns": [
+    {
+     "say": "got anything for making pizza at home?",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 4872.7,
+     "prompt_tokens": 14810,
+     "completion_tokens": 175,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "search_products",
+       {
+        "query": "pizza"
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#1",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#2",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#3",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#4",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#1",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "forbidden tool add_to_cart"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-srch-3",
+   "category": "unseen_wording",
+   "passed": false,
+   "failures": [
+    "turn 1: no products shown"
+   ],
+   "turns": [
+    {
+     "say": "which rice do people rate highest?",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 4669.1,
+     "prompt_tokens": 15017,
+     "completion_tokens": 141,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "get_product_details",
+       {
+        "product": "rice"
+       },
+       null
+      ],
+      [
+       "get_product_details",
+       {
+        "product": "#n"
+       },
+       null
+      ],
+      [
+       "get_product_details",
+       {
+        "product": "#n"
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#n",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "view_cart",
+       {},
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#n",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "no products shown"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-srch-4",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "looking for stuff that's packed with protein",
+     "reply": "Here are 8 options.",
+     "route": "agent",
+     "latency_ms": 697.4,
+     "prompt_tokens": 2095,
+     "completion_tokens": 20,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "search_products",
+       {
+        "query": "protein"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-add-0",
+   "category": "unseen_wording",
+   "passed": false,
+   "failures": [
+    "turn 1: cart lacks {'name': 'Maggi Masala Instant Noodles', 'qty': 2}; cart=[('Maggi Atta Noodles', 'Pack of 4', 2)]"
+   ],
+   "turns": [
+    {
+     "say": "could you chuck a couple of maggi packets into my order",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 4596.5,
+     "prompt_tokens": 13798,
+     "completion_tokens": 167,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "maggi packets",
+          "quantity": 2
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "view_cart",
+       {},
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "maggie packets",
+          "quantity": 2
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "view_cart",
+       {},
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "maggie packets",
+          "quantity": 2
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "maggie packets",
+          "quantity": 2
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "cart lacks {'name': 'Maggi Masala Instant Noodles', 'qty': 2}; cart=[('Maggi Atta Noodles', 'Pack of 4', 2)]"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-add-1",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "I've run out of eggs, sort me out",
+     "reply": "Added 1 x Eggoz Brown Eggs (Pack of 12).",
+     "route": "agent",
+     "latency_ms": 913.7,
+     "prompt_tokens": 2097,
+     "completion_tokens": 32,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "eggs",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-add-2",
+   "category": "unseen_wording",
+   "passed": false,
+   "failures": [
+    "turn 1: cart lacks {'name': 'Amul Toned Milk', 'label': '1 L'}; cart=[('Amul Toned Milk', '500 ml', 1)]"
+   ],
+   "turns": [
+    {
+     "say": "toss in a litre of amul toned milk",
+     "reply": "Added 1 x Amul Toned Milk (500 ml).",
+     "route": "agent",
+     "latency_ms": 1135.9,
+     "prompt_tokens": 2097,
+     "completion_tokens": 41,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul toned milk",
+          "quantity": 1,
+          "size": "litre"
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "cart lacks {'name': 'Amul Toned Milk', 'label': '1 L'}; cart=[('Amul Toned Milk', '500 ml', 1)]"
+     ],
+     "malformed_calls": 1,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-add-3",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "grab the large tub of amul vanilla ice cream",
+     "reply": "Added 1 x Amul Vanilla Ice Cream Tub (1.5 L).",
+     "route": "agent",
+     "latency_ms": 1063.8,
+     "prompt_tokens": 2097,
+     "completion_tokens": 38,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "large tub of amul vanilla ice cream",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-add-4",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "same flour I always get, one bag",
+     "reply": "Added 1 x Aashirvaad Whole Wheat Atta (10 kg).",
+     "route": "agent",
+     "latency_ms": 3655.1,
+     "prompt_tokens": 2095,
+     "completion_tokens": 32,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "flour",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-add-5",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "stick four red bulls in there",
+     "reply": "Added 4 x Red Bull Energy Drink (250 ml).",
+     "route": "agent",
+     "latency_ms": 908.8,
+     "prompt_tokens": 2093,
+     "completion_tokens": 32,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "red bulls",
+          "quantity": 4
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-edit-0",
+   "category": "unseen_wording",
+   "passed": false,
+   "failures": [
+    "turn 1: cart still has Lay's"
+   ],
+   "turns": [
+    {
+     "say": "ditch the crisps",
+     "reply": "Please confirm on screen.",
+     "route": "agent",
+     "latency_ms": 493.6,
+     "prompt_tokens": 2141,
+     "completion_tokens": 16,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "clear_cart",
+       {},
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "cart still has Lay's"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-edit-1",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "bump the milk up to four",
+     "reply": "Updated Amul Toned Milk.",
+     "route": "agent",
+     "latency_ms": 665.4,
+     "prompt_tokens": 2143,
+     "completion_tokens": 28,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "update_cart_item",
+       {
+        "product": "milk",
+        "quantity": 4
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-edit-2",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "I want two loaves of the bread, not one",
+     "reply": "Updated Britannia Brown Bread.",
+     "route": "agent",
+     "latency_ms": 646.0,
+     "prompt_tokens": 2147,
+     "completion_tokens": 27,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "update_cart_item",
+       {
+        "product": "bread",
+        "quantity": 2
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-multi-0",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "chuck in some brown bread and then head to the payment page",
+     "reply": "Added 1 x Britannia Brown Bread (400 g). Here's your checkout.",
+     "route": "agent",
+     "latency_ms": 1319.6,
+     "prompt_tokens": 2100,
+     "completion_tokens": 51,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "brown bread",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "navigate",
+       {
+        "page": "checkout"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-multi-1",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "do last friday's shop again",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 6596.8,
+     "prompt_tokens": 14239,
+     "completion_tokens": 226,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "reorder",
+       {
+        "order": "last friday"
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "1 x Amul Toned Milk (1 L)",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "2 x Eggoz Brown Eggs (Pack of 12)",
+          "quantity": 2
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "1 x FarmFresh Spinach (Palak) (250 g)",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "1 x Haldiram's Aloo Bhujia (200 g)",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#n",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-multi-2",
+   "category": "unseen_wording",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "milk please, and have it turn up tomorrow evening",
+     "reply": "Added 1 x Amul Toned Milk (1 L). Delivery set for Tue 20 Oct, 6 PM\u20137 PM.",
+     "route": "agent",
+     "latency_ms": 1439.0,
+     "prompt_tokens": 2098,
+     "completion_tokens": 55,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "milk",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "set_delivery_slot",
+       {
+        "when": "tomorrow evening"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-0",
+   "category": "recovery",
+   "passed": false,
+   "failures": [
+    "turn 1: reply lacks ['out of stock', 'unavailable', 'sold out', 'not available', \"isn't available\", 'not in stock', 'no stock']: I did what I could. Is there anything else you'd like?"
+   ],
+   "turns": [
+    {
+     "say": "i'd like some amul butter please",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 5048.4,
+     "prompt_tokens": 13660,
+     "completion_tokens": 198,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "reply lacks ['out of stock', 'unavailable', 'sold out', 'not available', \"isn't available\", 'not in stock', 'no stock']: I did what I could. Is there anything else you'd like?"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-1",
+   "category": "recovery",
+   "passed": false,
+   "failures": [
+    "turn 1: reply lacks ['out of stock', 'unavailable', 'sold out', 'not available', \"isn't available\", 'not in stock', 'no stock']: I did what I could. Is there anything else you'd like?",
+    "turn 2: cart lacks {'name': 'Mother Dairy Salted Butter'}; cart=[('Mother Dairy Full Cream Milk', '1 L', 1)]"
+   ],
+   "turns": [
+    {
+     "say": "i'd like some amul butter please",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 5715.1,
+     "prompt_tokens": 13660,
+     "completion_tokens": 198,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul butter",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "reply lacks ['out of stock', 'unavailable', 'sold out', 'not available', \"isn't available\", 'not in stock', 'no stock']: I did what I could. Is there anything else you'd like?"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "ok, the mother dairy one then",
+     "reply": "Added 1 x Mother Dairy Full Cream Milk (1 L).",
+     "route": "agent",
+     "latency_ms": 1839.4,
+     "prompt_tokens": 2094,
+     "completion_tokens": 32,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "mother dairy",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "cart lacks {'name': 'Mother Dairy Salted Butter'}; cart=[('Mother Dairy Full Cream Milk', '1 L', 1)]"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-2",
+   "category": "recovery",
+   "passed": false,
+   "failures": [
+    "turn 1: cart changed"
+   ],
+   "turns": [
+    {
+     "say": "i need fortune's sunflower oil, the 5 litre can",
+     "reply": "Added 1 x Fortune Sunflower Oil (1 L).",
+     "route": "agent",
+     "latency_ms": 1839.4,
+     "prompt_tokens": 2100,
+     "completion_tokens": 35,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "fortune's sunflower oil",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "cart changed"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "fine, give me the 1 litre one",
+     "reply": "Added 1 x Fortune Sunflower Oil (1 L).",
+     "route": "agent",
+     "latency_ms": 3768.0,
+     "prompt_tokens": 2212,
+     "completion_tokens": 35,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "fortune's sunflower oil",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-3",
+   "category": "recovery",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "some cheese plus a loaf of brown bread please",
+     "reply": "Added 1 x Britannia Brown Bread (400 g). Added 0 item(s), 1 need attention. Added 1 x Britannia Brown Bread (400 g).",
+     "route": "agent",
+     "latency_ms": 6023.4,
+     "prompt_tokens": 7125,
+     "completion_tokens": 107,
+     "llm_calls": 3,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "cheese",
+          "quantity": 1
+         },
+         {
+          "product": "bread",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "cheese",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "bread",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "the amul mozzarella",
+     "reply": "Added 1 x Amul Mozzarella Cheese (200 g).",
+     "route": "agent",
+     "latency_ms": 2876.3,
+     "prompt_tokens": 2350,
+     "completion_tokens": 65,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul mozzarella",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 1,
+     "unrecovered_calls": 1
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-4",
+   "category": "recovery",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "get me everything from my friday order again",
+     "reply": "Re-added 3 items from order #101. Out of stock, so not added: Eggoz Brown Eggs (Pack of 12).",
+     "route": "agent",
+     "latency_ms": 772.4,
+     "prompt_tokens": 2095,
+     "completion_tokens": 21,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "reorder",
+       {
+        "order": "friday"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-5",
+   "category": "recovery",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "let's wrap up and head to the till",
+     "reply": "Opened it. Please confirm on screen.",
+     "route": "agent",
+     "latency_ms": 1193.4,
+     "prompt_tokens": 4241,
+     "completion_tokens": 35,
+     "llm_calls": 2,
+     "tools": [
+      [
+       "navigate",
+       {
+        "page": "checkout"
+       },
+       null
+      ],
+      [
+       "clear_cart",
+       {},
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "oh right, add 2 packs of bananas then",
+     "reply": "Added 0 item(s), 1 need attention. Added 2 x FarmFresh Banana Robusta (12 pcs).",
+     "route": "agent",
+     "latency_ms": 3112.2,
+     "prompt_tokens": 4524,
+     "completion_tokens": 71,
+     "llm_calls": 2,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "bananas",
+          "quantity": 2,
+          "size": "packs"
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "bananas",
+          "quantity": 2
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 1,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "now checkout",
+     "reply": "Here's your checkout.",
+     "route": "agent",
+     "latency_ms": 1045.7,
+     "prompt_tokens": 2379,
+     "completion_tokens": 19,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "navigate",
+       {
+        "page": "checkout"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-6",
+   "category": "recovery",
+   "passed": false,
+   "failures": [
+    "turn 1: cart changed"
+   ],
+   "turns": [
+    {
+     "say": "add dragon fruit",
+     "reply": "Added 1 x FarmFresh Shimla Apple (500 g).",
+     "route": "agent",
+     "latency_ms": 1203.2,
+     "prompt_tokens": 2090,
+     "completion_tokens": 32,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "dragon fruit",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "cart changed"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-7",
+   "category": "recovery",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "can i get a loaf of britania brwn bred",
+     "reply": "![](https://example.com/image.png)",
+     "route": "agent",
+     "latency_ms": 4727.5,
+     "prompt_tokens": 13683,
+     "completion_tokens": 128,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "britania brwn bred",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "view_cart",
+       {},
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "britania brwn bred",
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "view_cart",
+       {},
+       "duplicate call suppressed"
+      ],
+      [
+       "view_cart",
+       {},
+       "duplicate call suppressed"
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-8",
+   "category": "recovery",
+   "passed": false,
+   "failures": [
+    "turn 2: cart still has Amul Toned Milk"
+   ],
+   "turns": [
+    {
+     "say": "one amul toned milk for me, cheers",
+     "reply": "Added 1 x Amul Toned Milk (1 L).",
+     "route": "agent",
+     "latency_ms": 1275.8,
+     "prompt_tokens": 2096,
+     "completion_tokens": 34,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul toned milk",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "sorry, I meant amul full cream",
+     "reply": "Added 1 x Amul Full Cream Milk (1 L).",
+     "route": "agent",
+     "latency_ms": 1569.6,
+     "prompt_tokens": 2207,
+     "completion_tokens": 34,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "amul full cream",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "cart still has Amul Toned Milk"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-9",
+   "category": "recovery",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "we're running low on rice at home",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 8211.9,
+     "prompt_tokens": 14471,
+     "completion_tokens": 201,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "rice",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product_id": 124,
+          "quantity": 1
+         }
+        ]
+       },
+       "invalid arguments: items.0.product: Field required"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product_id": 124,
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product_id": 124,
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product_id": 124,
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product_id": 124,
+          "quantity": 1
+         }
+        ]
+       },
+       "duplicate call suppressed"
+      ]
+     ],
+     "invalid_args": 1,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "india gate basmati",
+     "reply": "Added 1 x India Gate Basmati Rice (1 kg).",
+     "route": "agent",
+     "latency_ms": 3782.9,
+     "prompt_tokens": 2445,
+     "completion_tokens": 71,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "india gate basmati",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 1,
+     "unrecovered_calls": 1
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-10",
+   "category": "recovery",
+   "passed": false,
+   "failures": [
+    "turn 1: reply lacks ['butter']: Added 1 x Britannia Brown Bread (400 g); 1 x Eggoz Brown Eggs (Pack of 12). Cart: 2 items, \u20b9225.0."
+   ],
+   "turns": [
+    {
+     "say": "add bread, eggs and amul butter",
+     "reply": "Added 1 x Britannia Brown Bread (400 g); 1 x Eggoz Brown Eggs (Pack of 12). Cart: 2 items, \u20b9225.0.",
+     "route": "agent",
+     "latency_ms": 3196.2,
+     "prompt_tokens": 4342,
+     "completion_tokens": 56,
+     "llm_calls": 2,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "bread"
+         },
+         {
+          "product": "eggs"
+         },
+         {
+          "product": "amul butter"
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "view_cart",
+       {},
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "reply lacks ['butter']: Added 1 x Britannia Brown Bread (400 g); 1 x Eggoz Brown Eggs (Pack of 12). Cart: 2 items, \u20b9225.0."
+     ],
+     "malformed_calls": 1,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-11",
+   "category": "recovery",
+   "passed": false,
+   "failures": [
+    "turn 1: delivery slot hour 19, expected 6",
+    "turn 1: reply lacks ['6']: ![](https://example.com/your-image-url)",
+    "turn 2: delivery slot hour 19, expected 20"
+   ],
+   "turns": [
+    {
+     "say": "is a 2 am drop-off possible?",
+     "reply": "![](https://example.com/your-image-url)",
+     "route": "agent",
+     "latency_ms": 10110.4,
+     "prompt_tokens": 13789,
+     "completion_tokens": 154,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "set_delivery_slot",
+       {
+        "when": "a 2 am drop-off"
+       },
+       null
+      ],
+      [
+       "set_delivery_slot",
+       {
+        "when": "Mon 19 Oct, 1 PM"
+       },
+       null
+      ],
+      [
+       "set_delivery_slot",
+       {
+        "when": "Mon 19 Oct, 7 PM"
+       },
+       null
+      ],
+      [
+       "set_delivery_slot",
+       {
+        "when": "Mon 19 Oct, 5 AM"
+       },
+       null
+      ],
+      [
+       "set_delivery_slot",
+       {
+        "when": "Mon 19 Oct, 6 PM"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "delivery slot hour 19, expected 6",
+      "reply lacks ['6']: ![](https://example.com/your-image-url)"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "then make it 8 pm instead",
+     "reply": "Delivery set for Mon 19 Oct, 7 PM\u20138 PM.",
+     "route": "agent",
+     "latency_ms": 4138.9,
+     "prompt_tokens": 2484,
+     "completion_tokens": 41,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "set_delivery_slot",
+       {
+        "when": "Mon 19 Oct, 8 PM"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "delivery slot hour 19, expected 20"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-12",
+   "category": "recovery",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "finish up and submit this order",
+     "reply": "Please confirm on screen.",
+     "route": "agent",
+     "latency_ms": 1241.0,
+     "prompt_tokens": 2111,
+     "completion_tokens": 16,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "place_order",
+       {},
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "hold on, throw a brown loaf in before that",
+     "reply": "Added 1 x Modern Brown Bread (400 g).",
+     "route": "agent",
+     "latency_ms": 7366.2,
+     "prompt_tokens": 2181,
+     "completion_tokens": 32,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "brown loaf",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "ok now place it",
+     "reply": "Please confirm on screen.",
+     "route": "agent",
+     "latency_ms": 1635.6,
+     "prompt_tokens": 2282,
+     "completion_tokens": 16,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "place_order",
+       {},
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-13",
+   "category": "recovery",
+   "passed": false,
+   "failures": [
+    "turn 1: cart lacks {'name': 'Red Bull', 'qty': 3}; cart=[('Red Bull Energy Drink', '250 ml', 1)]",
+    "turn 2: cart lacks {'name': 'Red Bull', 'qty': 1}; cart=[('Red Bull Energy Drink', '250 ml', 2)]"
+   ],
+   "turns": [
+    {
+     "say": "stock me up with three cans of red bull",
+     "reply": "Added 0 item(s), 1 need attention. Added 1 x Red Bull Energy Drink (250 ml).",
+     "route": "agent",
+     "latency_ms": 7233.8,
+     "prompt_tokens": 4312,
+     "completion_tokens": 73,
+     "llm_calls": 2,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "red bull",
+          "quantity": 3,
+          "size": "cans"
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "red bull energy drink",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "cart lacks {'name': 'Red Bull', 'qty': 3}; cart=[('Red Bull Energy Drink', '250 ml', 1)]"
+     ],
+     "malformed_calls": 1,
+     "unrecovered_calls": 0
+    },
+    {
+     "say": "that's too many, just one",
+     "reply": "Added 1 x Red Bull Energy Drink (250 ml).",
+     "route": "agent",
+     "latency_ms": 6610.8,
+     "prompt_tokens": 2282,
+     "completion_tokens": 55,
+     "llm_calls": 1,
+     "tools": [
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "red bull energy drink",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "cart lacks {'name': 'Red Bull', 'qty': 1}; cart=[('Red Bull Energy Drink', '250 ml', 2)]"
+     ],
+     "malformed_calls": 1,
+     "unrecovered_calls": 1
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-14",
+   "category": "recovery",
+   "passed": false,
+   "failures": [
+    "turn 1: reply lacks [\"couldn't\", 'no ', 'not find', \"don't have\", '0']: I did what I could. Is there anything else you'd like?"
+   ],
+   "turns": [
+    {
+     "say": "do you stock any organic ice-cream?",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 13800.7,
+     "prompt_tokens": 17233,
+     "completion_tokens": 126,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "search_products",
+       {
+        "query": "organic ice-cream"
+       },
+       null
+      ],
+      [
+       "get_product_details",
+       {
+        "product": "#1"
+       },
+       null
+      ],
+      [
+       "get_product_details",
+       {
+        "product": "#2"
+       },
+       null
+      ],
+      [
+       "search_products",
+       {
+        "query": "#2"
+       },
+       null
+      ],
+      [
+       "get_product_details",
+       {
+        "product": "#1"
+       },
+       "duplicate call suppressed"
+      ],
+      [
+       "search_products",
+       {
+        "query": "#1"
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [
+      "reply lacks [\"couldn't\", 'no ', 'not find', \"don't have\", '0']: I did what I could. Is there anything else you'd like?"
+     ],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  },
+  {
+   "id": "ho-rec-15",
+   "category": "recovery",
+   "passed": true,
+   "failures": [],
+   "turns": [
+    {
+     "say": "add the cheapest kitkat",
+     "reply": "I did what I could. Is there anything else you'd like?",
+     "route": "agent",
+     "latency_ms": 12280.0,
+     "prompt_tokens": 16791,
+     "completion_tokens": 173,
+     "llm_calls": 6,
+     "tools": [
+      [
+       "search_products",
+       {
+        "query": "kitkat",
+        "sort": "price_low"
+       },
+       null
+      ],
+      [
+       "get_product_details",
+       {
+        "product": "#1"
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#1",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#2",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#3",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ],
+      [
+       "add_to_cart",
+       {
+        "items": [
+         {
+          "product": "#4",
+          "quantity": 1
+         }
+        ]
+       },
+       null
+      ]
+     ],
+     "invalid_args": 0,
+     "hallucinated_action": false,
+     "error": null,
+     "fails": [],
+     "malformed_calls": 0,
+     "unrecovered_calls": 0
+    }
+   ]
+  }
+ ]
+}

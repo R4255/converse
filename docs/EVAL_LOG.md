@@ -221,3 +221,58 @@ dropping a malformed call makes a model-format problem look like the agent chose
 
 First reading (8-task smoke): 7B 0% malformed; fine-tuned 1.5B **11% of turns malformed, all repaired, 0% unrecovered**.
 That was invisible before this change.
+
+## Held-out set (unseen wording + multi-step recovery)
+
+Suggested by a reader: test the 1.5B-vs-3B claim on wording no model has seen, plus multi-step recovery. Also, report
+the safety number with its categories and sample count (now in the README: 13/13 tasks in 6 categories, 95% CI 77–100%).
+
+* `evals/heldout.py`: 40 tasks / 51 utterances. 24 **unseen wording** tasks (main-suite intents, phrased fresh) and
+  16 **recovery** tasks: out of stock, an unavailable size, "add X and Y" with X ambiguous, reorder with missing items,
+  empty-cart checkout, an unknown product, a typo, user corrections.
+* `evals/check_heldout.py` proves the wording is unseen: every utterance scores < 70 fuzzy similarity against all
+  2,994 fine-tuning sentences and all 137 main-suite sentences (max 69). 16 first drafts were too close and were
+  rewritten.
+* Harness: `--suite heldout`, per-task out-of-stock simulation (restored afterwards, verified), and 95% Wilson
+  confidence intervals per category.
+* Found while writing the recovery tasks: reorder's template reply didn't mention skipped out-of-stock items. It
+  now lists them.
+
+**A measurement bug of my own:** the first "4-model" run evaluated the 7B four times. A zsh loop didn't split
+"tag model" pairs, so `--model` arrived empty and the harness silently fell back to the default model. It was caught
+only because every result file records the model actually used. The harness now refuses an empty or unknown model,
+and the runs were repeated with explicit commands.
+
+### Results (each run's `config.model` verified)
+
+| model | overall | unseen wording | recovery | p50 | malformed calls (unrecovered) |
+|---|---|---|---|---|---|
+| qwen2.5 7B | **30/40 = 75.0%** (CI 60–86%) | 19/24 | **11/16** | 8.8 s | 0% |
+| **converse-1.5b** | **23/40 = 57.5%** (CI 42–72%) | 16/24 | 7/16 | 3.1 s | 13.7% (5.9%) |
+| qwen2.5 3B | **23/40 = 57.5%** (CI 42–72%) | 17/24 | 6/16 | 3.0 s | 0% |
+| qwen2.5 1.5B | 11/40 = 27.5% (CI 16–43%) | 9/24 | 2/16 | 2.3 s | 0% |
+
+**Reading it:**
+
+* **Fine-tuning generalises beyond its templates:** on unseen wording, 27.5% → 57.5% over the base 1.5B. The 95%
+  intervals barely touch, so it's unlikely to be noise.
+* **The tie with the 3B is aggregate, not task-for-task.** Each passes 8 tasks the other fails. The fine-tune wins on
+  cart actions and multi-step requests (`ho-add-1/3/4`, `ho-multi-1/2`, `ho-rec-4/9/12`); the 3B wins on filtered search
+  and order lookup (`ho-srch-1/2/3`, `ho-ord-0`, `ho-add-2`, `ho-edit-0`, `ho-rec-8/10`). That matches the training data,
+  which had many add/checkout templates and fewer search-with-filter ones. With n = 40 the two are statistically
+  indistinguishable.
+* **Fresh wording costs everyone ~18 points** (fine-tune 75.4% → 57.5%, 7B 93.1% → 75.0%). The main suite, written
+  alongside the agent, overstates real-world accuracy.
+* **Malformed tool calls are a fine-tune-specific weakness** (13.7% of turns; the base models emit none). It's visible
+  only because of the parse-error metric added after a reader's comment.
+
+**Four recovery tasks fail on every model.** That points at my deterministic code, not at model quality:
+
+| task | what happened | root cause |
+|---|---|---|
+| `ho-rec-1` "ok, the mother dairy one then" | added **Cadbury Dairy Milk** | the model rewrote it as "mother dairy milk"; no Mother Dairy product cleared the relevance bar, the brand filter fell back to all candidates, and the near-exact-name rule (token-set similarity) matched the subset "dairy milk" |
+| `ho-rec-2` "fine, give me the 1 litre one" | added **Freedom** oil, not Fortune | the model wrote "fortune's"; the possessive defeats brand detection, so the most popular 1 L oil won |
+| `ho-rec-6` "add dragon fruit" (not sold) | added a **Shimla apple** | the resolver always picks the best candidate; there's no relevance floor for "we don't sell that" |
+| `ho-rec-11` "is a 2 am drop-off possible?" | booked 1 PM today | the model passed "2 am" without "tonight"; a time already past today should roll to tomorrow (then clamp to 6 AM) |
+
+These are the next fixes. The numbers above are the baseline; any re-run will be reported as a separate row.
